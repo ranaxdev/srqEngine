@@ -3,7 +3,7 @@
 
 class Entity {
 public:
-	/* Constructor - init entity/generate signature */
+	/* Init entity/generate signature */
 	Entity();
 
 	/* List of all components sorted relative to their personal identifier */
@@ -13,8 +13,15 @@ public:
 	template<typename T, typename...Args>
 	unsigned int addComponent(T, Args...args);
 
+	/* Getters */
+	bool* getComponents();
+
 private:
+	/* Unique entity signature */
 	unsigned int m_ID;
+
+	/* Bool array whose indices correspond to which component the entity has */
+	bool hascomponents[1];
 };
 
 #endif
