@@ -153,6 +153,12 @@
   <ItemGroup>
     <ClCompile Include="depend\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Scenes\Scene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\Scenes\Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

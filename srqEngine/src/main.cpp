@@ -1,7 +1,9 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 #include<iostream>
-
+#include "Renderer.h"
+#include "Scenes/Scene.h"
+/* Entry point */
 int main() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -22,17 +24,12 @@ int main() {
 		std::cout << "[ERROR] Failed to init GLAD!" << std::endl;
 	}
 
+	/* Config OpenGL options */
 	glViewport(0, 0, 800, 600);
 
-	while (!glfwWindowShouldClose(mainWindow)) {
-		glClearColor(0.2f, 0.3f, 0.7f,1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-
-		glfwSwapBuffers(mainWindow);
-		glfwPollEvents();
-	}
-
+	/* Init renderer */
+	Renderer r(mainWindow);
+	
 	glfwTerminate();
 	return 0;
 }
