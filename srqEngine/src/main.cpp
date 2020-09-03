@@ -2,7 +2,7 @@
 #include<GLFW/glfw3.h>
 #include<iostream>
 #include "Renderer.h"
-#include "Scenes/Scene.h"
+#include "SceneMgmt/Scene.h"
 /* Entry point */
 int main() {
 	glfwInit();

@@ -152,13 +152,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="depend\glad.c" />
+    <ClCompile Include="src\Components\Renderable.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\Scenes\Scene.cpp" />
+    <ClCompile Include="src\SceneMgmt\Entity.cpp" />
+    <ClCompile Include="src\SceneMgmt\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Renderable.h" />
     <ClInclude Include="src\Renderer.h" />
-    <ClInclude Include="src\Scenes\Scene.h" />
+    <ClInclude Include="src\SceneMgmt\Entity.h" />
+    <ClInclude Include="src\SceneMgmt\Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
