@@ -165,6 +165,7 @@
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\SceneMgmt\Entity.h" />
     <ClInclude Include="src\SceneMgmt\Scene.h" />
+    <ClInclude Include="src\Util\Globals.h" />
     <ClInclude Include="src\Util\Shader.h" />
     <ClInclude Include="src\Util\Signature.h" />
   </ItemGroup>

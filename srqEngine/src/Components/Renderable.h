@@ -1,5 +1,5 @@
 #ifndef _H_RENDERABLE
-#define _H_RENDARABLE
+#define _H_RENDERABLE
 
 struct Renderable {
 	static const unsigned int m_ID;
@@ -10,6 +10,9 @@ struct Renderable {
 
 	Renderable(const int belongsTo, float* vertices, unsigned int* indices, float* texcoords);
 
+private:
+	void setupRenderable();
+	unsigned int VAO;
 };
 
 #endif

@@ -1,7 +1,5 @@
 #include "Signature.h"
 #include<iostream>
-/* Maximum amount of entities allowed in a scene */
-const unsigned int Signature::MAX_ENTITIES = 5;
 
 /* Declare empty queue */
 std::queue<int> Signature::entitySignatures;
@@ -41,3 +39,4 @@ int Signature::generateSig() {
 
 /* Recycle entity signature after it's destruction */
 void Signature::destroySig(int signature) {}
+
