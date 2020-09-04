@@ -1,4 +1,5 @@
-﻿  Entity.cpp
-  main.cpp
+﻿  Renderer.cpp
+  Shader.cpp
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Util\Shader.cpp(27,33): warning C4101: 'e': unreferenced local variable
   Generating Code...
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

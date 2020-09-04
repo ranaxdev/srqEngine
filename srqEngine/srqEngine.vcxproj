@@ -157,6 +157,7 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\SceneMgmt\Entity.cpp" />
     <ClCompile Include="src\SceneMgmt\Scene.cpp" />
+    <ClCompile Include="src\Util\Shader.cpp" />
     <ClCompile Include="src\Util\Signature.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +165,12 @@
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\SceneMgmt\Entity.h" />
     <ClInclude Include="src\SceneMgmt\Scene.h" />
+    <ClInclude Include="src\Util\Shader.h" />
     <ClInclude Include="src\Util\Signature.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\fragmentgen.shader" />
+    <None Include="res\shaders\vertexgen.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

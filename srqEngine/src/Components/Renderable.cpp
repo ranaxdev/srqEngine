@@ -3,10 +3,10 @@
 /* Global identifer - a renderable has ID 0 */
 const unsigned int Renderable::m_ID = 0;
 
-
-/* Constructor - positional data */
-Renderable::Renderable(const int belongsTo, const float* vertices, const unsigned int* indices){
-	Renderable::m_attachedEntityID = belongsTo;
-	std::cout << "[RENDERABLE] SUCCESS" << std::endl;
-	std::cout << "Attached to entity ID: " << Renderable::m_attachedEntityID << std::endl;
+/* Process positional data and entity ID, and associate it with an entity */
+Renderable::Renderable(const int belongsTo, float* vertices, unsigned int* indices, float* texcoords)
+	: m_attachedEntityID(belongsTo), pos_data(vertices), indices(indices), texcoords(texcoords)
+{
+	std::cout << "[RENDERABLE] SUCCESSFULLY ATTACHED TO ENTITY: " << Renderable::m_attachedEntityID << std::endl;
 };
+

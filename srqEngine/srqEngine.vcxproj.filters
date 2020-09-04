@@ -36,6 +36,9 @@
     <ClCompile Include="src\Util\Signature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Util\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -53,5 +56,12 @@
     <ClInclude Include="src\Util\Signature.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Util\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\vertexgen.shader" />
+    <None Include="res\shaders\fragmentgen.shader" />
   </ItemGroup>
 </Project>

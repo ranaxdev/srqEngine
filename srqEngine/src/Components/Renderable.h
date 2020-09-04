@@ -2,13 +2,13 @@
 #define _H_RENDARABLE
 
 struct Renderable {
-	/* Identifier */
 	static const unsigned int m_ID;
-	/* Entity ID it is attached to */
 	int m_attachedEntityID;
-	
-	/* Constructor */
-	Renderable(const int belongsTo, const float* vertices, const unsigned int* indices);
+	float* pos_data;
+	unsigned int* indices;
+	float* texcoords;
+
+	Renderable(const int belongsTo, float* vertices, unsigned int* indices, float* texcoords);
 
 };
 

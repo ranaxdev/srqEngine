@@ -33,8 +33,10 @@ int main() {
 	/* Init renderer */
 	float data[] = { 23,67,44,12 };
 	unsigned int idx[] = { 1,2,3 };
+	float tex[] = { 2,3,1 };
 	Entity e1 = Entity();
-	e1.addComponent(Entity::RENDERABLE, e1.getID(), data, idx);
+	e1.addComponent(Entity::RENDERABLE, e1.getID(), data, idx, tex);
+	std::cout << e1.getComponents()[Entity::ComponentType::RENDERABLE] << std::endl;
 	Renderer r(mainWindow);
 	
 	glfwTerminate();
