@@ -2,7 +2,10 @@
 #include<GLFW/glfw3.h>
 #include<iostream>
 #include "Renderer.h"
+#include "SceneMgmt/Entity.h"
 #include "SceneMgmt/Scene.h"
+
+
 /* Entry point */
 int main() {
 	glfwInit();
@@ -28,6 +31,9 @@ int main() {
 	glViewport(0, 0, 800, 600);
 
 	/* Init renderer */
+	Entity e1 = Entity();
+	Entity e2 = Entity();
+
 	Renderer r(mainWindow);
 	
 	glfwTerminate();
