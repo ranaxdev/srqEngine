@@ -34,6 +34,13 @@ int main() {
 	float data[] = { 23,67,44,12 };
 	unsigned int idx[] = { 1,2,3 };
 	float tex[] = { 2,3,1 };
+	Scene s1 = Scene();
+	Scene::setActiveScene(&s1);
+	
+	Entity e1 = Entity();
+	e1.addComponent(Entity::ComponentType::RENDERABLE, e1.getID(), data, idx, tex);
+	
+	std::cout << s1.renderables[0] << std::endl;
 
 	Renderer r(mainWindow);
 	

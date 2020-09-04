@@ -6,7 +6,7 @@
 class Entity {
 public:
 	/* Init entity/generate signature */
-	Entity(Scene* scene);
+	Entity();
 	~Entity();
 
 	/* List of all components sorted relative to their personal identifier */
@@ -19,7 +19,7 @@ public:
 			case RENDERABLE: {
 				Renderable r = Renderable(args...);
 				hascomponents[RENDERABLE] = true;
-
+				scene->renderables[RENDERABLE] = &r;
 				break;
 
 			}
