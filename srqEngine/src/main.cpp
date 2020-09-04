@@ -31,9 +31,10 @@ int main() {
 	glViewport(0, 0, 800, 600);
 
 	/* Init renderer */
+	float data[] = { 23,67,44,12 };
+	unsigned int idx[] = { 1,2,3 };
 	Entity e1 = Entity();
-	Entity e2 = Entity();
-
+	e1.addComponent(Entity::RENDERABLE, e1.getID(), data, idx);
 	Renderer r(mainWindow);
 	
 	glfwTerminate();

@@ -10,6 +10,7 @@ public:
 private:
 	static const unsigned int MAX_ENTITIES;
 	static std::queue<int> entitySignatures;
+	static unsigned int inUse;
 };
 
 #endif

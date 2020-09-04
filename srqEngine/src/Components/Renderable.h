@@ -4,8 +4,11 @@
 struct Renderable {
 	/* Identifier */
 	static const unsigned int m_ID;
-	/* Constructor takes in positional vertex/index data */
-	Renderable(const float vertices[], const unsigned int indicies[]);
+	/* Entity ID it is attached to */
+	int m_attachedEntityID;
+	
+	/* Constructor */
+	Renderable(const int belongsTo, const float* vertices, const unsigned int* indices);
 
 };
 
