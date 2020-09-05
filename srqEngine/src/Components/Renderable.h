@@ -1,7 +1,8 @@
 #ifndef _H_RENDERABLE
 #define _H_RENDERABLE
 
-struct Renderable {
+class Renderable {
+public:
 	static const unsigned int m_ID;
 	int m_attachedEntityID;
 	float* pos_data;

@@ -2,9 +2,9 @@
 #include "../Util/Signature.h"
 #include<iostream>
 /* Initialize the entity by generating an ID */
-Entity::Entity(){
+Entity::Entity(Scene* scene) : scene(scene){
 	// Set entity's scene to the active one
-	Entity::scene = Scene::getActiveScene();
+	//Entity::scene = Scene::getActiveScene();
 	// No componenets attached initially
 	Entity::hascomponents[1] = {0};
 	
@@ -26,4 +26,5 @@ bool* Entity::hasComponents() { return Entity::hascomponents; }
 
 
 /* Return the ID (unique signature) of the current entity */
-int Entity::getID() { return Entity::m_ID; }
+int Entity::getID() const { return Entity::m_ID; }
+

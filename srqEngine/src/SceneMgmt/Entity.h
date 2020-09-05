@@ -6,31 +6,32 @@
 class Entity {
 public:
 	/* Init entity/generate signature */
-	Entity();
+	Entity(Scene* scene);
 	~Entity();
 
 	/* List of all components sorted relative to their personal identifier */
 	enum ComponentType {RENDERABLE};
 
-	/* Add component to entity and return component signature */
+	/* Add component to entity and return component signature*/
 	template<typename ...Args>
 	unsigned int addComponent(ComponentType type, Args...args) {
 		switch (type) {
 			case RENDERABLE: {
 				Renderable r = Renderable(args...);
 				hascomponents[RENDERABLE] = true;
-				scene->renderables[RENDERABLE] = &r;
+				std::cout << "getting " << Entity::getID() << std::endl;
+				scene->renderables.push_back(r);
 				break;
-
 			}
 		}
 		return 0;
-	}
+	} 
+	
 
 	/* Getters */
 	bool* hasComponents();
-	int getID();
-
+	int getID() const;
+	
 private:
 	/* Unique entity signature */
 	int m_ID;

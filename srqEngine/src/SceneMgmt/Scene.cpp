@@ -4,10 +4,8 @@
 Scene* Scene::m_activeScene = nullptr;
 
 /* Initialize all component arrays as empty*/
-Scene::Scene() {
-	for (int i = 0; i < MAX_ENTITIES; i++) {
-		Scene::renderables[i] = nullptr;
-	}
+Scene::Scene(const char* name):name(name) {
+	
 }
 
 Scene::~Scene() {}
