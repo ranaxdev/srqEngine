@@ -2,7 +2,7 @@
 #include "../Util/Signature.h"
 #include<iostream>
 /* Initialize the entity by generating an ID */
-Entity::Entity(Scene* scene) : scene(scene){
+Entity::Entity(Scene* scene): scene(scene){
 	// Set entity's scene to the active one
 	//Entity::scene = Scene::getActiveScene();
 	// No componenets attached initially
@@ -15,7 +15,6 @@ Entity::Entity(Scene* scene) : scene(scene){
 }
 /* Destroy entity by clearing all related memory */
 Entity::~Entity() {
-	std::cout << "Entity destroyed " << Entity::m_ID << std::endl;
 }
 
 /* Getters */

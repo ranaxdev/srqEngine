@@ -30,9 +30,12 @@ int Signature::generateSig() {
 	Signature::entitySignatures.pop();
 	Signature::inUse++;
 
+	std::cout << "------------------------------------------------------" << std::endl;
 	std::cout << "SIGNATURE GENERATED: " << sig << std::endl;
 	std::cout << "Signatures left: " << Signature::entitySignatures.size() << std::endl;
 	std::cout << "Curently in use: " << Signature::inUse << std::endl;
+	std::cout << "------------------------------------------------------" << std::endl;
+
 	return sig;
 }
 

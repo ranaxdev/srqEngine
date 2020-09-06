@@ -8,6 +8,10 @@ public:
 	/* Constructor & Destructor */
 	Renderer(GLFWwindow* window);
 	~Renderer();
+	void render();
+
+private:
+	GLFWwindow* window;
 };
 
 #endif
