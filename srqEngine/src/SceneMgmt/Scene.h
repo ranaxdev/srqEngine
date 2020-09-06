@@ -8,7 +8,12 @@ public:
 	std::vector<Renderable> renderables;
 	
 	Scene();
+	
+	static void setActiveScene(Scene* scene);
+	static Scene* getActiveScene();
 
+private:
+	static Scene* active_scene;
 };
 
 #endif

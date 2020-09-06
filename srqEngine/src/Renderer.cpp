@@ -3,11 +3,12 @@
 #include "Renderer.h"
 #include "Util/Shader.h"
 #include "Util/Globals.h"
+#include "Util/VertexBuffer.h"
 #include "SceneMgmt/Entity.h"
 
 /* GLOBALS */
 extern const int MAX_ENTITIES;
-unsigned int VAO;
+
 
 /* Constructor*/
 // Render the currently active scene
@@ -16,37 +17,71 @@ Renderer::Renderer(GLFWwindow* window) : window(window) {
 }
 
 void Renderer::render() {
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
 
 	Shader generalShader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	generalShader.use();
 
-	float pos[] = { 0.0f,0.5f,0.0f, -0.5f,-0.5f,0.0f, 0.5f,-0.5f,0.0f };
+	float pos[] = {
+		-0.5f,-0.5f,-0.5f, // triangle 1 : begin
+	-0.5f,-0.5f, 0.5f,
+	-0.5f, 0.5f, 0.5f, // triangle 1 : end
+	0.5f, 0.5f,-0.5f, // triangle 2 : begin
+	-0.5f,-0.5f,-0.5f,
+	-0.5f, 0.5f,-0.5f, // triangle 2 : end
+	0.5f,-0.5f, 0.5f,
+	-0.5f,-0.5f,-0.5f,
+	0.5f,-0.5f,-0.5f,
+	0.5f, 0.5f,-0.5f,
+	0.5f,-0.5f,-0.5f,
+	-0.5f,-0.5f,-0.5f,
+	-0.5f,-0.5f,-0.5f,
+	-0.5f, 0.5f, 0.5f,
+	-0.5f, 0.5f,-0.5f,
+	0.5f,-0.5f, 0.5f,
+	-0.5f,-0.5f, 0.5f,
+	-0.5f,-0.5f,-0.5f,
+	-0.5f, 0.5f, 0.5f,
+	-0.5f,-0.5f, 0.5f,
+	0.5f,-0.5f, 0.5f,
+	0.5f, 0.5f, 0.5f,
+	0.5f,-0.5f,-0.5f,
+	0.5f, 0.5f,-0.5f,
+	0.5f,-0.5f,-0.5f,
+	0.5f, 0.5f, 0.5f,
+	0.5f,-0.5f, 0.5f,
+	0.5f, 0.5f, 0.5f,
+	0.5f, 0.5f,-0.5f,
+	-0.5f, 0.5f,-0.5f,
+	0.5f, 0.5f, 0.5f,
+	-0.5f, 0.5f,-0.5f,
+	-0.5f, 0.5f, 0.5f,
+	0.5f, 0.5f, 0.5f,
+	-0.5f, 0.5f, 0.5f,
+	0.5f,-0.5f, 0.5f
+	};
 	unsigned int ind[] = { 0,0,0 };
 	float tex[] = { 0,0,0 };
-	float pos2[] = { -0.3f,0.5f,0.0f, 0.0f,-0.5f,0.0f, 0.5f,-0.5f,0.0f };
-	unsigned int ind2[] = { 0,0,0 };
-	float tex2[] = { 0,0,0 };
 	Scene s1 = Scene();
 
 	Entity e1 = Entity(&s1);
-	Entity e2 = Entity(&s1);
-	e2.addComponent(Entity::RENDERABLE, e2.getID(), pos2, ind2, tex2);
 	e1.addComponent(Entity::RENDERABLE, e1.getID(), pos, ind, tex);
+	Scene::setActiveScene(&s1);
 	
-	unsigned int VBO[2];
-	glGenBuffers(2, VBO);
+	
+	/* Vertex Arrays*/
+	unsigned int VAO[2];
+	glGenVertexArrays(2, VAO);
+	
+	/* Data distribution initialization into VAOs */
 	for (int i = 0; i < s1.renderables.size(); i++) {
-		
-		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
-		glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), s1.renderables[i].pos_data, GL_STATIC_DRAW);
+		glBindVertexArray(VAO[i]);
+		VertexBuffer vbo = VertexBuffer(pos, sizeof(pos));
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (const void*)0);
 		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		std::cout << "VBO: " <<  VBO[i] << std::endl;
+		
+		glBindVertexArray(0);
+		
 	}
-
 
 	/* Main loop */
 	while (!glfwWindowShouldClose(window)) {
@@ -55,11 +90,12 @@ void Renderer::render() {
 
 		/* DRAW ENTITIES FROM ACTIVE SCENE */
 		for (int i = 0; i < 2; i++) {
-			glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (const void*)0);
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			glBindVertexArray(VAO[i]);
+			glDrawArrays(GL_TRIANGLES, 0, 12*3);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
+		glBindVertexArray(0);
+		
 		/* Swap buffers */
 		glfwSwapBuffers(window);
 
