@@ -3,7 +3,7 @@
 /* No active scene initially */
 Scene* Scene::active_scene = nullptr;
 
-Scene::Scene() {
+Scene::Scene(){
 	
 }
 

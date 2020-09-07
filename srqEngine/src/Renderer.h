@@ -6,12 +6,12 @@
 class Renderer {
 public:
 	/* Constructor & Destructor */
-	Renderer(GLFWwindow* window);
+	Renderer();
 	~Renderer();
-	void render();
+	void render(unsigned int* VAOs, int numtoRender);
 
 private:
-	GLFWwindow* window;
+	
 };
 
 #endif

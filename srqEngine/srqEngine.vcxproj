@@ -163,6 +163,7 @@
     <ClCompile Include="src\Util\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Components\Renderable.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\SceneMgmt\Entity.h" />
