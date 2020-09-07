@@ -157,9 +157,11 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\SceneMgmt\Entity.cpp" />
     <ClCompile Include="src\SceneMgmt\Scene.cpp" />
+    <ClCompile Include="src\temp\stb_image.cpp" />
     <ClCompile Include="src\Util\IndexBuffer.cpp" />
     <ClCompile Include="src\Util\Shader.cpp" />
     <ClCompile Include="src\Util\Signature.cpp" />
+    <ClCompile Include="src\Util\Texture.cpp" />
     <ClCompile Include="src\Util\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,11 +175,15 @@
     <ClInclude Include="src\Util\IndexBuffer.h" />
     <ClInclude Include="src\Util\Shader.h" />
     <ClInclude Include="src\Util\Signature.h" />
+    <ClInclude Include="src\Util\Texture.h" />
     <ClInclude Include="src\Util\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentgen.shader" />
     <None Include="res\shaders\vertexgen.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\logo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

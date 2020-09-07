@@ -8,6 +8,7 @@
 #include "Util/Globals.h"
 #include "Util/Shader.h"
 #include "Util/VertexBuffer.h"
+#include "Util/Texture.h"
 #include "SceneMgmt/Entity.h"
 
 /* GLOBALS */
@@ -46,8 +47,15 @@ int main() {
 	Renderer r = Renderer();
 	
 	/* Define model data*/
-	float pos_data[] = { -0.5f,0.5f,0.0f, -0.5,0.0f,0.0f, 0.0f,0.0f,0.0f };
-	float pos_data2[] = { 0.0,0.5f,0.0f, -0.5,0.0f,0.0f, 0.5f,0.0f,0.0f };
+	float pos_data[] = { 
+		-0.5f,0.5f,0.0f, 0.0f, 0.0f,
+		-0.5,0.0f,0.0f,  1.0f, 0.0f,
+		0.0f,0.0f,0.0f,  0.0f, 1.0f };
+
+	float pos_data2[] = { 
+		0.0,0.5f,0.0f, 0.0f, 0.0f,
+		-0.5,0.0f,0.0f, 1.0f, 0.0f,
+		0.5f,0.0f,0.0f, 0.0f, 1.0f };
 	unsigned int idx[] = { 0,0,0 };
 	float tex[] = { 0,0,0 };
 	
@@ -71,14 +79,19 @@ int main() {
 
 	for (int i = 0; i < Scene::getActiveScene()->renderables.size(); i++) {
 		glBindVertexArray(VAO[i]);
-		VertexBuffer vbo = VertexBuffer(Scene::getActiveScene()->renderables[i].pos_data, 9*sizeof(float));
+		VertexBuffer vbo = VertexBuffer(Scene::getActiveScene()->renderables[i].pos_data, 15*sizeof(float));
 		
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (const void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (const void*)0);
 		glEnableVertexAttribArray(0);
+		
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (const void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
 	}
 	
 	/* ********************** TEMP: TEXTURES (REFACTOR LATER) ********************** */
-
+	Texture logoTex = Texture("res/textures/logo.png");
+	logoTex.bind(0);
+	shader.setInt("logoTex", 0);
 
 	/* MVP Transformation/uniform setting */
 	glm::mat4 model = glm::mat4(1.0f);

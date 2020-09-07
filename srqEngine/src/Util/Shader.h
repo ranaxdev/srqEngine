@@ -6,8 +6,8 @@ public:
 	unsigned int ID;
 
 	Shader(const char* vshaderPath, const char* fshaderPath);
-	void bind();
-	void unbind();
+	void bind() const;
+	void unbind() const;
 
 	void setInt(const char* name, int val);
 	void setFloat(const char* name, float val);

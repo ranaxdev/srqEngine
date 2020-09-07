@@ -56,10 +56,10 @@ Shader::Shader(const char* vshaderPath, const char* fshaderPath) {
 }
 
 /* Use the program */
-void Shader::bind() {
+void Shader::bind() const {
 	glUseProgram(Shader::ID);
 }
-void Shader::unbind() {
+void Shader::unbind() const {
 	glUseProgram(0);
 }
 
