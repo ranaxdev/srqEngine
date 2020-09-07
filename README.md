@@ -8,6 +8,8 @@ Planned implementations
 - Entity component system
 - Renderer
 - GUI
+- Image loader
+- Model vertex parser
 - FPS camera
 - Map generation
 - Collisions
