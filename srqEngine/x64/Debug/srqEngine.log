@@ -1,4 +1,2 @@
-﻿  main.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\main.cpp(78,68): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\main.cpp(119,60): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+﻿  Camera.cpp
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

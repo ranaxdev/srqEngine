@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="depend\glad.c" />
+    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Components\Renderable.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
