@@ -15,6 +15,7 @@ Renderer::Renderer() {
 	
 }
 
+/* Render to screen */
 void Renderer::render(unsigned int* VAOs, int numtoRender) {
 	for (int i = 0; i < numtoRender; i++) {
 		glBindVertexArray(VAOs[i]);
