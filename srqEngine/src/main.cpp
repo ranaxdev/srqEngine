@@ -92,6 +92,8 @@ int main() {
 	Texture logoTex = Texture("res/textures/logo.png");
 	logoTex.bind(0);
 	shader.setInt("logoTex", 0);
+	/* **********************************************************************************/
+
 
 	/* MVP Transformation/uniform setting */
 	glm::mat4 model = glm::mat4(1.0f);
