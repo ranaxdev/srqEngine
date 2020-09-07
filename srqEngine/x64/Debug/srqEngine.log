@@ -1,5 +1,4 @@
 ﻿  Renderer.cpp
-  IndexBuffer.cpp
-  VertexBuffer.cpp
+  main.cpp
   Generating Code...
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

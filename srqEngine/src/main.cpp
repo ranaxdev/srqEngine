@@ -32,6 +32,19 @@ int main() {
 	/* Init renderer */
 	Renderer r = Renderer(mainWindow);
 	r.render();
+	/* Main loop */
+	while (!glfwWindowShouldClose(mainWindow)) {
+		glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		/* DRAW ENTITIES FROM ACTIVE SCENE */
+		
+		/* Swap buffers */
+		glfwSwapBuffers(mainWindow);
+
+		/* Poll events and input */
+		glfwPollEvents();
+	}
 
 	glfwTerminate();
 	return 0;
