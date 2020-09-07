@@ -53,7 +53,7 @@ int main() {
 	
 	/* Link shader and use it*/
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
-	shader.use();
+	shader.bind();
 	
 	/* ECS Init, bind entities to scene and add componenets to them */
 	Scene s1 = Scene();
@@ -76,6 +76,9 @@ int main() {
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (const void*)0);
 		glEnableVertexAttribArray(0);
 	}
+	
+	/* ********************** TEMP: TEXTURES (REFACTOR LATER) ********************** */
+
 
 	/* MVP Transformation/uniform setting */
 	glm::mat4 model = glm::mat4(1.0f);
@@ -86,9 +89,9 @@ int main() {
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 	projection = glm::perspective(glm::radians(45.0f), (float)(800.0f / 600.0f), 0.1f, 100.0f);
 
-	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, &model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "view"), 1, GL_FALSE, &view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, &projection[0][0]);
+	shader.setMat4("model", model);
+	shader.setMat4("view", view);
+	shader.setMat4("projection", projection);
 
 	
 

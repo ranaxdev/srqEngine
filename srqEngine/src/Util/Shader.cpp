@@ -56,8 +56,11 @@ Shader::Shader(const char* vshaderPath, const char* fshaderPath) {
 }
 
 /* Use the program */
-void Shader::use() {
+void Shader::bind() {
 	glUseProgram(Shader::ID);
+}
+void Shader::unbind() {
+	glUseProgram(0);
 }
 
 /* Set uniforms quickly utility */
@@ -66,6 +69,9 @@ void Shader::setInt(const char* name, int val) {
 }
 void Shader::setFloat(const char* name, float val) {
 	glUniform1f(glGetUniformLocation(Shader::ID, name), val);
+}
+void Shader::setMat4(const char* name, glm::mat4 val) {
+	glUniformMatrix4fv(glGetUniformLocation(Shader::ID, name), 1, GL_FALSE, &val[0][0]);
 }
 
 /* Compilation/Linking error checking */

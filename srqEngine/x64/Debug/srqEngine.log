@@ -1,4 +1,8 @@
-﻿  main.cpp
+﻿  Renderer.cpp
+  Shader.cpp
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Util\Shader.cpp(27,33): warning C4101: 'e': unreferenced local variable
+  main.cpp
 C:\Dev\srqEngine\srqEngine\srqEngine\src\main.cpp(70,68): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
 C:\Dev\srqEngine\srqEngine\srqEngine\src\main.cpp(101,60): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

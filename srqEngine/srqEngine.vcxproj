@@ -168,6 +168,7 @@
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\SceneMgmt\Entity.h" />
     <ClInclude Include="src\SceneMgmt\Scene.h" />
+    <ClInclude Include="src\temp\stb_image.h" />
     <ClInclude Include="src\Util\Globals.h" />
     <ClInclude Include="src\Util\IndexBuffer.h" />
     <ClInclude Include="src\Util\Shader.h" />
