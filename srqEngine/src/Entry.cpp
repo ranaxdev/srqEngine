@@ -70,12 +70,12 @@ int main() {
 	
 	Scene::setActiveScene(&s1); // set scene as active 
 
-	e1.addComponent(Entity::ComponentType::RENDERABLE, e1.getID(), pos_data, idx, tex);
-	e2.addComponent(Entity::ComponentType::RENDERABLE, e2.getID(), pos_data2, idx, tex);
+	e1.addComponent(ComponentType::RENDERABLE, e1.getID(), pos_data, idx, tex);
+	e2.addComponent(ComponentType::RENDERABLE, e2.getID(), pos_data2, idx, tex);
 	
 	/* bind and parse renderable objects */
 	unsigned int VAO[MAX_ENTITIES];
-	glGenVertexArrays(Scene::getActiveScene()->renderables.size(), VAO);
+	glGenVertexArrays((unsigned int)(Scene::getActiveScene()->renderables.size()), VAO);
 
 	for (int i = 0; i < Scene::getActiveScene()->renderables.size(); i++) {
 		glBindVertexArray(VAO[i]);
@@ -116,7 +116,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		r.render(VAO, Scene::getActiveScene()->renderables.size());
+		r.render(VAO, (int) (Scene::getActiveScene()->renderables.size()));
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);

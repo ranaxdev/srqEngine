@@ -11,7 +11,7 @@ public:
 
 	void setInt(const char* name, int val);
 	void setFloat(const char* name, float val);
-	void setMat4(const char* name, glm::mat4 val);
+	void setMat4(const char* name, glm::mat4& val);
 
 private:
 	void compileErrorChecking(unsigned int shader, const char* type);
