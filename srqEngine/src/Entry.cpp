@@ -56,9 +56,9 @@ int main() {
 	
 	/* TEMP - VAO/VBO/Data init */
 	float data[] = {
-		0.0f, 0.5f, 0.0f,	0.0f,0.0f,0.0f,
-		-0.5f, 0.0f, 0.0f,	0.0f,1.0f,0.0f,
-		0.5f, 0.0f, 0.0f,	0.0f,0.0f,1.0f
+		0.0f, 0.5f, 0.0f,	0.8f,0.2f,0.0f,
+		-0.5f, 0.0f, 0.0f,	0.0f,8.0f,0.2f,
+		0.5f, 0.0f, 0.0f,	0.5f,0.2f,0.8f
 	};
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -76,7 +76,7 @@ int main() {
 
 	unsigned int index = 0;
 	for (const auto& element : layout) {
-		glVertexAttribPointer(index, element.count, GL_FLOAT, element.normalized? GL_TRUE:GL_FALSE, layout.getStride(), (const void*)(element.offset));
+		glVertexAttribPointer(index, element.count, GL_DATA_TYPE_LOOKUP(element.type), element.normalized? GL_TRUE:GL_FALSE, layout.getStride(), (const void*)(element.offset));
 		glEnableVertexAttribArray(index);
 		index++;
 	}
