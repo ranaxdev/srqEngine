@@ -1,16 +1,18 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
+
 #include<glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
-#include<iostream>
-#include "Renderer.h"
-#include "Util/Globals.h"
-#include "Util/Shader.h"
-#include "Util/VertexBuffer.h"
-#include "Util/Texture.h"
-#include "SceneMgmt/Entity.h"
 
+#include<iostream>
+
+#include "Util/Globals.h"
+
+#include "Renderer.h"
+#include "Renderer_API/Shader.h"
+#include "Renderer_API/Texture.h"
+#include "Renderer_API/Buffer.h"
 /* GLOBALS */
 extern const int MAX_ENTITIES;
 
@@ -47,68 +49,37 @@ int main() {
 	Renderer r = Renderer();
 	
 	/* Define model data*/
-	float pos_data[] = { 
-		-0.5f,0.5f,0.0f, 0.0f, 0.0f,
-		-0.5,0.0f,0.0f,  1.0f, 0.0f,
-		0.0f,0.0f,0.0f,  0.0f, 1.0f };
 
-	float pos_data2[] = { 
-		0.0,0.5f,0.0f, 0.0f, 0.0f,
-		-0.5,0.0f,0.0f, 1.0f, 0.0f,
-		0.5f,0.0f,0.0f, 0.0f, 1.0f };
-	unsigned int idx[] = { 0,0,0 };
-	float tex[] = { 0,0,0 };
-	
 	/* Link shader and use it*/
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	shader.bind();
 	
-	/* ECS Init, bind entities to scene and add componenets to them */
-	Scene s1 = Scene();
-	Entity e1 = Entity(&s1);
-	Entity e2 = Entity(&s1);
-	
-	Scene::setActiveScene(&s1); // set scene as active 
+	/* TEMP - VAO/VBO/Data init */
+	float data[] = {
+		0.0f, 0.5f, 0.0f,	0.0f,0.0f,0.0f,
+		-0.5f, 0.0f, 0.0f,	0.0f,1.0f,0.0f,
+		0.5f, 0.0f, 0.0f,	0.0f,0.0f,1.0f
+	};
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 
-	e1.addComponent(ComponentType::RENDERABLE, e1.getID(), pos_data, idx, tex);
-	e2.addComponent(ComponentType::RENDERABLE, e2.getID(), pos_data2, idx, tex);
-	
-	/* bind and parse renderable objects */
-	unsigned int VAO[MAX_ENTITIES];
-	glGenVertexArrays((unsigned int)(Scene::getActiveScene()->renderables.size()), VAO);
+	VertexBuffer vb = VertexBuffer(data, sizeof(data));
 
-	for (int i = 0; i < Scene::getActiveScene()->renderables.size(); i++) {
-		glBindVertexArray(VAO[i]);
-		VertexBuffer vbo = VertexBuffer(Scene::getActiveScene()->renderables[i].pos_data, 15*sizeof(float));
+	// defines layout of data in vao 
+	BufferLayout layout =
+	{
+		{DataType::Float3, "a_Pos"},
+		{DataType::Float3, "a_Color"},
 		
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (const void*)0);
-		glEnableVertexAttribArray(0);
-		
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (const void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+	};
+
+	unsigned int index = 0;
+	for (const auto& element : layout) {
+		glVertexAttribPointer(index, element.count, GL_FLOAT, element.normalized? GL_TRUE:GL_FALSE, layout.getStride(), (const void*)(element.offset));
+		glEnableVertexAttribArray(index);
+		index++;
 	}
-	
-	/* ********************** TEMP: TEXTURES (REFACTOR LATER) ********************** */
-	Texture logoTex = Texture("res/textures/logo.png");
-	logoTex.bind(0);
-	shader.setInt("logoTex", 0);
-	/* **********************************************************************************/
-
-
-	/* MVP Transformation/uniform setting */
-	glm::mat4 model = glm::mat4(1.0f);
-	glm::mat4 view = glm::mat4(1.0f);
-	glm::mat4 projection = glm::mat4(1.0f);
-
-	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, -.0f));
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-	projection = glm::perspective(glm::radians(45.0f), (float)(800.0f / 600.0f), 0.1f, 100.0f);
-
-	shader.setMat4("model", model);
-	shader.setMat4("view", view);
-	shader.setMat4("projection", projection);
-
-	
 
 	/* Main loop */
 	while (!glfwWindowShouldClose(mainWindow)) {
@@ -116,7 +87,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		r.render(VAO, (int) (Scene::getActiveScene()->renderables.size()));
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);

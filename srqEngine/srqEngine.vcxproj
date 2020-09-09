@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer_API\Buffer.cpp" />
     <ClCompile Include="depend\glad.c" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Components\Renderable.cpp" />
@@ -159,13 +160,12 @@
     <ClCompile Include="src\SceneMgmt\Entity.cpp" />
     <ClCompile Include="src\SceneMgmt\Scene.cpp" />
     <ClCompile Include="src\temp\stb_image.cpp" />
-    <ClCompile Include="src\Util\IndexBuffer.cpp" />
-    <ClCompile Include="src\Util\Shader.cpp" />
+    <ClCompile Include="src\Renderer_API\Shader.cpp" />
     <ClCompile Include="src\Util\Signature.cpp" />
-    <ClCompile Include="src\Util\Texture.cpp" />
-    <ClCompile Include="src\Util\VertexBuffer.cpp" />
+    <ClCompile Include="src\Renderer_API\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer_API\Buffer.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Components\Renderable.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -173,11 +173,9 @@
     <ClInclude Include="src\SceneMgmt\Scene.h" />
     <ClInclude Include="src\temp\stb_image.h" />
     <ClInclude Include="src\Util\Globals.h" />
-    <ClInclude Include="src\Util\IndexBuffer.h" />
-    <ClInclude Include="src\Util\Shader.h" />
+    <ClInclude Include="src\Renderer_API\Shader.h" />
     <ClInclude Include="src\Util\Signature.h" />
-    <ClInclude Include="src\Util\Texture.h" />
-    <ClInclude Include="src\Util\VertexBuffer.h" />
+    <ClInclude Include="src\Renderer_API\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentgen.shader" />
