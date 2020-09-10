@@ -13,6 +13,8 @@
 #include "Renderer_API/Shader.h"
 #include "Renderer_API/Texture.h"
 #include "Renderer_API/Buffer.h"
+#include "Renderer_API/VertexArray.h"
+
 /* GLOBALS */
 extern const int MAX_ENTITIES;
 
@@ -56,30 +58,21 @@ int main() {
 	
 	/* TEMP - VAO/VBO/Data init */
 	float data[] = {
-		0.0f, 0.5f, 0.0f,	0.8f,0.2f,0.0f,
-		-0.5f, 0.0f, 0.0f,	0.0f,8.0f,0.2f,
-		0.5f, 0.0f, 0.0f,	0.5f,0.2f,0.8f
+		0.0f, 0.5f, 0.0f,	
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f
 	};
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	VertexBuffer vb = VertexBuffer(data, sizeof(data));
-
-	// defines layout of data in vao 
-	BufferLayout layout =
-	{
-		{DataType::Float3, "a_Pos"},
-		{DataType::Float3, "a_Color"},
-		
-	};
-
-	unsigned int index = 0;
-	for (const auto& element : layout) {
-		glVertexAttribPointer(index, element.count, GL_DATA_TYPE_LOOKUP(element.type), element.normalized? GL_TRUE:GL_FALSE, layout.getStride(), (const void*)(element.offset));
-		glEnableVertexAttribArray(index);
-		index++;
-	}
+	unsigned int indices[] = { 0, 1, 2 }; 
+	std::shared_ptr<IndexBuffer> ib = std::make_shared<IndexBuffer>(indices, (unsigned int) (sizeof(indices)/sizeof(unsigned int)));
+	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(data, (unsigned int) (sizeof(data)));
+	vb->setlayout(
+		{
+			{DataType::Float3, "a_Pos"}
+		}
+	);
+	VertexArray va = VertexArray();
+	va.addVBO(vb);
+	va.setEBO(ib);
 
 	/* Main loop */
 	while (!glfwWindowShouldClose(mainWindow)) {
@@ -87,7 +80,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, va.getEBO().get()->getCount(), GL_UNSIGNED_INT, nullptr);
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);

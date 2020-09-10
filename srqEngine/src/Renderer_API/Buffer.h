@@ -19,17 +19,18 @@ static unsigned int DataTypeSize(DataType type) {
 	case DataType::Mat4:     return 4 * 4 * 4;
 
 	}
+	return 4;
 }
 
 struct BufferElement {
-	std::string name;
+	const char* name;
 	unsigned int offset;
 	unsigned int size;
 	unsigned int count;
 	bool normalized;
 	DataType type;
 
-	BufferElement(DataType type, const std::string& name)
+	BufferElement(DataType type, const char* name)
 		: name(name), type(type), size(DataTypeSize(type)), offset(0), count(size/4), normalized(false)
 		// NOTE: CHANGE /4 LATER DEPENDING ON THE ACTUAL BYTE SIZE OF PRIMITIVE  ^^^^
 		// Better way is to create func getElementCount and define each with switch(type)
@@ -39,7 +40,7 @@ class BufferLayout {
 
 public:
 	BufferLayout(const std::initializer_list<BufferElement>& elements);
-
+	BufferLayout();
 	unsigned int getStride() const;
 
 	// iters
@@ -73,9 +74,12 @@ public:
 	void bind() const;
 	void unbind() const;
 
+	void setlayout(const BufferLayout& layout);
+	BufferLayout getlayout() const;
 
 private:
 	unsigned int ID;
+	BufferLayout layout;
 };
 
 

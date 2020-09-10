@@ -1,5 +1,1 @@
-﻿  Entry.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(79,169): warning C4312: 'type cast': conversion from 'const unsigned int' to 'const void *' of greater size
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Util\Globals.h(20): warning C4715: 'GL_DATA_TYPE_LOOKUP': not all control paths return a value
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Renderer_API\Buffer.h(22): warning C4715: 'DataTypeSize': not all control paths return a value
-  srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe
+﻿  srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

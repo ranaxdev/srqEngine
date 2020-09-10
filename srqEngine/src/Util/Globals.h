@@ -17,6 +17,7 @@ static GLenum GL_DATA_TYPE_LOOKUP(DataType type) {
 		case DataType::Mat3:     return GL_FLOAT;
 		case DataType::Mat4:     return GL_FLOAT;
 	}
+	return GL_FLOAT;
 }
 
 #endif

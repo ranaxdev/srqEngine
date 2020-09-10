@@ -3,6 +3,7 @@
 
 // **************** BUFFER LAYOUT CLASS ********************
 // *********************************************************
+BufferLayout::BufferLayout() {}
 BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements) 
 	: elements(elements)
 {
@@ -29,6 +30,8 @@ VertexBuffer::VertexBuffer(float* vertices, unsigned int size) {
 	glGenBuffers(1, &(VertexBuffer::ID));
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer::ID);
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+
+	VertexBuffer::layout = {}; // empty layout by default
 }
 
 VertexBuffer::~VertexBuffer() { glDeleteBuffers(1, &(VertexBuffer::ID)); }
@@ -36,6 +39,8 @@ VertexBuffer::~VertexBuffer() { glDeleteBuffers(1, &(VertexBuffer::ID)); }
 void VertexBuffer::bind() const { glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer::ID); }
 void VertexBuffer::unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
+void VertexBuffer::setlayout(const BufferLayout& layout) { VertexBuffer::layout = layout; }
+BufferLayout VertexBuffer::getlayout() const { return layout; }
 
 
 // **************** INDEX BUFFER CLASS ********************
