@@ -2,14 +2,12 @@ DOOM-Style engine for my final year disseration. Created using OpenGL/C++
 
 CURRENT PHASE: PROTOTYPE
 
-Planned implementations
-- Queue class
-- Math library
-- Entity component system
-- Renderer
-- GUI
-- Image loader
-- Model vertex parser
-- FPS camera
-- Map generation
-- Collisions
+Planned implementations for current phase
+- Queue class util                ❌
+- Entity component system         ✔️
+- Renderer API                    ✔️
+- Renderer                        ❌
+- GUI (Debug)                     ❌
+- Textured models                 ❌
+- FPS Camera                      ❌
+
