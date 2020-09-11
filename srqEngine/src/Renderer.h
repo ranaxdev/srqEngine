@@ -5,7 +5,6 @@
 
 class Renderer {
 public:
-	/* Constructor & Destructor */
 	Renderer();
 	~Renderer();
 	void render(unsigned int* VAOs, int numtoRender);

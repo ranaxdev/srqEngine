@@ -4,16 +4,13 @@
 #include "Renderer_API/Shader.h"
 #include "Util/Globals.h"
 
-
 /* GLOBALS */
 extern const int MAX_ENTITIES;
 
-
-/* Constructor*/
-// Render the currently active scene
 Renderer::Renderer() {
 	
 }
+Renderer::~Renderer() {}
 
 /* Render to screen */
 void Renderer::render(unsigned int* VAOs, int numtoRender) {
@@ -23,5 +20,3 @@ void Renderer::render(unsigned int* VAOs, int numtoRender) {
 	}
 }
 
-/* Destructor */
-Renderer::~Renderer() {}

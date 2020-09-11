@@ -9,7 +9,7 @@ Entity::Entity(Scene* scene): scene(scene){
 	if (Entity::m_ID == -1)
 		Entity::~Entity();
 }
-/* Destroy entity by clearing all related memory */
+/* Clear related memory */
 Entity::~Entity() {
 }
 

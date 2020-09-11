@@ -1,13 +1,12 @@
 #include "Signature.h"
 #include<iostream>
 
-/* Declare empty queue */
+/* Queue initially empty */
 std::queue<int> Signature::entitySignatures;
 
-/* Initially none in use */
+/* No signatures in use by default */
 unsigned int Signature::inUse = 0;
 
-/* Blank for now - possibly wont create signature objects */
 Signature::Signature() {}
 
 
@@ -30,6 +29,7 @@ int Signature::generateSig() {
 	Signature::entitySignatures.pop();
 	Signature::inUse++;
 
+	/* DEBUG (Temporary until assertion system is up) */
 	std::cout << "------------------------------------------------------" << std::endl;
 	std::cout << "SIGNATURE GENERATED: " << sig << std::endl;
 	std::cout << "Signatures left: " << Signature::entitySignatures.size() << std::endl;

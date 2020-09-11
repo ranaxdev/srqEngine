@@ -3,12 +3,13 @@
 #include "../Components/Renderable.h"
 #include "Scene.h"
 #include<iostream>
+
 /* List of all components sorted relative to their personal identifier */
 enum class ComponentType { RENDERABLE };
 
 class Entity {
 public:
-	/* Init entity/generate signature */
+
 	Entity(Scene * scene);
 	~Entity();
 
@@ -27,14 +28,11 @@ public:
 	} 
 
 
-	/* Getters */
 	int getID() const;
 	
 private:
-	/* Unique entity signature */
 	int m_ID;
 
-	/* Reference to scene this entity belongs to */
 	Scene* scene;
 };
 
