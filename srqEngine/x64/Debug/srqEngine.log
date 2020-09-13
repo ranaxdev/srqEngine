@@ -1,9 +1,12 @@
-﻿  Entry.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(101,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(136,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(137,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(140,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(141,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(142,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(143,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  Camera.cpp
+  Entry.cpp
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(99,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(155,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(156,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(159,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(160,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(161,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(162,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Renderer.cpp
+  Generating Code...
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

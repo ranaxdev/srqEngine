@@ -1,5 +1,7 @@
+
 #include "Camera.h"
 #include "Util/Globals.h"
+
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 Camera::Camera() {
@@ -18,9 +20,9 @@ Camera::Camera() {
 
 Camera::~Camera() {}
 
-/* Update position */
+/* Update input */
 void Camera::update() {
-	
+
 }
 
 /* Recalculate view projection matrix */

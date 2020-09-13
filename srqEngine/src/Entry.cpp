@@ -32,9 +32,8 @@ bool initmouse = true;
 
 /*---------------- TEMPORARY - callback declarations ------------------- */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void processMovement(GLFWwindow* window);
-
+void mousePoll(GLFWwindow* window);
+void keysPoll(GLFWwindow* window);
 /* Camera */
 Camera cam = Camera();
 
@@ -55,8 +54,7 @@ int main() {
 	glfwMakeContextCurrent(mainWindow); // make it the current context
 	/* TEMPORARY: SET GLFW CALLBACKS */
 	glfwSetFramebufferSizeCallback(mainWindow, framebuffer_size_callback);
-	glfwSetCursorPosCallback(mainWindow, mouse_callback);
-
+	
 	/* Config GLFW Options */
 	glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -79,7 +77,7 @@ int main() {
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f
 	};
-	unsigned int indices[] = { 0, 1, 2 }; 
+	unsigned int indices[] = { 0, 1, 2 };
 	std::shared_ptr<IndexBuffer> ib = std::make_shared<IndexBuffer>(indices, (unsigned int) (sizeof(indices)/sizeof(unsigned int)));
 	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(data, (unsigned int) (sizeof(data)));
 	vb->setlayout(
@@ -102,8 +100,9 @@ int main() {
 		delta = curr - last;
 		last = curr;
 		// process input (TEMP)
-		processMovement(mainWindow);
-
+		keysPoll(mainWindow);
+		mousePoll(mainWindow);
+		
 		glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -125,13 +124,33 @@ int main() {
 }
 
 
-
 /* --------------------------- TEMPORARY - DEFINE CALLBACKS ----------------------  */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+void keysPoll(GLFWwindow* window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, true);
+	}
+	float camSpeed = 2.0f * delta;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
+		cam.setCamPos(cam.getCamPos() += camSpeed * (cam.getCamFront()));
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // move back
+		cam.setCamPos(cam.getCamPos() -= camSpeed * (cam.getCamFront()));
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { // move left
+		cam.setCamPos(cam.getCamPos() -= glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp())) * camSpeed);
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // move right
+		cam.setCamPos(cam.getCamPos() += glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp())) * camSpeed);
+	}
+}
+void mousePoll(GLFWwindow* window) {
+	double xpos;
+	double ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
 	if (initmouse) {
 		lastX = xpos;
 		lastY = ypos;
@@ -150,32 +169,11 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	pitch += yoff;
 
 	if (pitch > 89.0f) { pitch = 89.0f; }
-	if (pitch < -89.0f) { pitch = -89.0f;  }
+	if (pitch < -89.0f) { pitch = -89.0f; }
 
 	glm::vec3 newCamFront;
 	newCamFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 	newCamFront.y = sin(glm::radians(pitch));
 	newCamFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	cam.setCamFront(newCamFront);
-}
-
-void processMovement(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
-	float camSpeed = 3.0f*delta;
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
-		cam.setCamPos(cam.getCamPos() += camSpeed*(cam.getCamFront()));
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // move back
-		cam.setCamPos(cam.getCamPos() -= camSpeed * (cam.getCamFront()));
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { // move left
-		cam.setCamPos(cam.getCamPos() -= glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp()))*camSpeed);
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // move right
-		cam.setCamPos(cam.getCamPos() += glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp())) * camSpeed);
-	}
-
-
 }
