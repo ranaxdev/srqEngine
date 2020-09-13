@@ -4,7 +4,8 @@
 #include "../Renderer_API/Buffer.h"
 
 const int MAX_ENTITIES = 5;
-
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 /* Lookup table to translate generic data type into GL ENUM */
 static GLenum GL_DATA_TYPE_LOOKUP(DataType type) {

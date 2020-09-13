@@ -22,6 +22,7 @@ Texture::Texture(const char* filepath) :
 
 	// process texture buffer data 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, Texture::width, Texture::height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
+	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// free image data memory

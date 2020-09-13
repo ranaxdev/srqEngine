@@ -15,11 +15,19 @@
 #include "Renderer_API/Buffer.h"
 #include "Renderer_API/VertexArray.h"
 
+#include "Camera.h"
+
+// ------------------------------------------------
+
 /* GLOBALS */
 extern const int MAX_ENTITIES;
 
 /*---------------- TEMPORARY - callback declarations ------------------- */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processMovement(GLFWwindow* window);
+
+/* Camera */
+Camera cam = Camera();
 
 /* Entry point */
 int main() {
@@ -38,6 +46,7 @@ int main() {
 	glfwMakeContextCurrent(mainWindow); // make it the current context
 	/* TEMPORARY: SET GLFW CALLBACKS */
 	glfwSetFramebufferSizeCallback(mainWindow, framebuffer_size_callback);
+	
 
 	/* Load glad */
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -47,14 +56,10 @@ int main() {
 	/* Config OpenGL options */
 	glViewport(0, 0, 800, 600);
 
-	/* Init renderer */
-	Renderer r = Renderer();
-	
-	/* Define model data*/
 
-	/* Link shader and use it*/
+	/* Setup shaders */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
-	shader.bind();
+	
 	
 	/* TEMP - VAO/VBO/Data init */
 	float data[] = {
@@ -74,13 +79,23 @@ int main() {
 	va.addVBO(vb);
 	va.setEBO(ib);
 
-	/* Main loop */
+	
+
+	// ============================================================
+	/* Game loop */
+	// ============================================================
 	while (!glfwWindowShouldClose(mainWindow)) {
+		// process input
+		processMovement(mainWindow);
+
 		glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		/* INIT RENDERER */
+		Renderer::init(cam);
+
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		glDrawElements(GL_TRIANGLES, va.getEBO().get()->getCount(), GL_UNSIGNED_INT, nullptr);
+		Renderer::render(shader, va);
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);
@@ -98,4 +113,22 @@ int main() {
 /* --------------------------- TEMPORARY - DEFINE CALLBACKS ----------------------  */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
+}
+
+void processMovement(GLFWwindow* window) {
+	float camSpeed = 0.01f;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
+		cam.setCamPos(cam.getCamPos() += camSpeed*(cam.getCamFront()));
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // move back
+		cam.setCamPos(cam.getCamPos() -= camSpeed * (cam.getCamFront()));
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { // move left
+		cam.setCamPos(cam.getCamPos() -= glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp()))*camSpeed);
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // move right
+		cam.setCamPos(cam.getCamPos() += glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp())) * camSpeed);
+	}
+
+
 }
