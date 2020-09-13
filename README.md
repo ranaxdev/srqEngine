@@ -9,6 +9,6 @@ Planned implementations for current phase
 - Renderer                        ❌
 - GUI (Debug)                     ❌
 - Textured models                 ❌
-- FPS Camera                      ❌
+- FPS Camera                      ✔️
 - Timed game loop                 ❌
 </pre>
