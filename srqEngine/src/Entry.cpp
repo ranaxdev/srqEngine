@@ -22,8 +22,17 @@
 /* GLOBALS */
 extern const int MAX_ENTITIES;
 
+float delta = 0.0f;
+float last = 0.0f;
+float yaw = -90.0f;
+float pitch = 0.0f;
+float lastX = 800.0f / 2.0f;
+float lastY = 600.0f / 2.0f;
+bool initmouse = true;
+
 /*---------------- TEMPORARY - callback declarations ------------------- */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processMovement(GLFWwindow* window);
 
 /* Camera */
@@ -46,7 +55,10 @@ int main() {
 	glfwMakeContextCurrent(mainWindow); // make it the current context
 	/* TEMPORARY: SET GLFW CALLBACKS */
 	glfwSetFramebufferSizeCallback(mainWindow, framebuffer_size_callback);
-	
+	glfwSetCursorPosCallback(mainWindow, mouse_callback);
+
+	/* Config GLFW Options */
+	glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	/* Load glad */
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -55,7 +67,7 @@ int main() {
 
 	/* Config OpenGL options */
 	glViewport(0, 0, 800, 600);
-
+	
 
 	/* Setup shaders */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
@@ -85,7 +97,11 @@ int main() {
 	/* Game loop */
 	// ============================================================
 	while (!glfwWindowShouldClose(mainWindow)) {
-		// process input
+		// delta time setup
+		float curr = glfwGetTime();
+		delta = curr - last;
+		last = curr;
+		// process input (TEMP)
 		processMovement(mainWindow);
 
 		glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
@@ -115,8 +131,39 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	if (initmouse) {
+		lastX = xpos;
+		lastY = ypos;
+		initmouse = false;
+	}
+	float xoff = xpos - lastX;
+	float yoff = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	float sense = 0.1f;
+	xoff *= sense;
+	yoff *= sense;
+
+	yaw += xoff;
+	pitch += yoff;
+
+	if (pitch > 89.0f) { pitch = 89.0f; }
+	if (pitch < -89.0f) { pitch = -89.0f;  }
+
+	glm::vec3 newCamFront;
+	newCamFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	newCamFront.y = sin(glm::radians(pitch));
+	newCamFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cam.setCamFront(newCamFront);
+}
+
 void processMovement(GLFWwindow* window) {
-	float camSpeed = 0.01f;
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, true);
+	}
+	float camSpeed = 3.0f*delta;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
 		cam.setCamPos(cam.getCamPos() += camSpeed*(cam.getCamFront()));
 	}
