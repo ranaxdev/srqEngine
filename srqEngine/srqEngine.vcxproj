@@ -186,6 +186,8 @@
     <None Include="res\shaders\vertexgen.shader" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\textures\brick.png" />
+    <Image Include="res\textures\floor.png" />
     <Image Include="res\textures\logo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -9,7 +9,7 @@ uniform mat4 u_M;
 
 void main() {
 
-	gl_Position = u_VP * vec4(aPos, 1.0f);
+	gl_Position = u_VP * u_M * vec4(aPos, 1.0f);
 	vertexColor = vec4(aPos,1.0f) * 0.5 + vec4(0.5f,0.5f,0.5f, 1.0f);
 	tc = aTex;
 }

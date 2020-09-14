@@ -35,11 +35,13 @@ Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath)
 	}
 
 	// bind texture
-	tex.bind();
+	Model::tex.bind();
 }
 Model::~Model(){}
 
-
+void Model::update() {
+	Model::tex.bind();
+}
 
 int Model::getTotalVectors() const { return Model::totalVertices; }
 std::vector<glm::vec3>& Model::getVertices() { return Model::vertices; }

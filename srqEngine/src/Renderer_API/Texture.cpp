@@ -37,10 +37,10 @@ Texture::~Texture() {
 
 
 /* Bind and unbind textures from texture slots */
-void Texture::bind() const {
-	glActiveTexture(GL_TEXTURE0 + slots.back());
+void Texture::bind(unsigned int slot) const {
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, ID);
-	slots.pop_back();
+	
 }
 
 /*

@@ -7,7 +7,7 @@ public:
 	Texture(const char* filepath);
 	~Texture();
 
-	void bind() const;
+	void bind(unsigned int slot =0) const;
 	void unbind() const;
 
 	int getWidth() const;

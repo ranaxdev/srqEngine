@@ -74,15 +74,17 @@ int main() {
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	
-	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/logo.png");
-	
+	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png"); // uses floor texture
+	Model M_WALL = Model("res/models/map.obj", "res/textures/brick.png");
+	Model M_PYR = Model("res/models/pyr.obj", "res/textures/pyr.png");
 
 	// ==========================================================================================//
 
 	/* VAO/VBO/Data init */
+	VertexArray va = VertexArray();
+	/* DATA FOR FLOOR */
 	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&(M_FLOOR.v_values[0]), (unsigned int)(M_FLOOR.v_values.size()*sizeof(unsigned int)));
 	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(&(M_FLOOR.t_values[0]), (unsigned int)(M_FLOOR.v_values.size()*sizeof(unsigned int)));
-	
 	vb->setlayout(
 		{
 			{DataType::Float3, "a_Pos"}
@@ -93,11 +95,50 @@ int main() {
 			{DataType::Float2, "a_Tex"}
 		}
 	);
-
-	VertexArray va = VertexArray();
 	va.addVBOSingleAttrib(vb, 0);
 	va.addVBOSingleAttrib(vb2, 1);
 
+	/* DATA FOR WALLS */
+	VertexArray va2 = VertexArray();
+	std::shared_ptr<VertexBuffer> vb3 = std::make_shared<VertexBuffer>(&(M_WALL.v_values[0]), (unsigned int)(M_WALL.v_values.size() * sizeof(unsigned int)));
+	std::shared_ptr<VertexBuffer> vb4 = std::make_shared<VertexBuffer>(&(M_WALL.t_values[0]), (unsigned int)(M_WALL.v_values.size() * sizeof(unsigned int)));
+	vb3->setlayout(
+		{
+			{DataType::Float3, "a_Pos"}
+		}
+	);
+	vb4->setlayout(
+		{
+			{DataType::Float2, "a_Tex"}
+		}
+	);
+	va2.addVBOSingleAttrib(vb3, 0);
+	va2.addVBOSingleAttrib(vb4, 1);
+
+	/* DATA FOR PYRAMID */
+	VertexArray va3 = VertexArray();
+	std::shared_ptr<VertexBuffer> vb5 = std::make_shared<VertexBuffer>(&(M_PYR.v_values[0]), (unsigned int)(M_PYR.v_values.size() * sizeof(unsigned int)));
+	std::shared_ptr<VertexBuffer> vb6 = std::make_shared<VertexBuffer>(&(M_PYR.t_values[0]), (unsigned int)(M_PYR.v_values.size() * sizeof(unsigned int)));
+	vb5->setlayout(
+		{
+			{DataType::Float3, "a_Pos"}
+		}
+	);
+	vb6->setlayout(
+		{
+			{DataType::Float2, "a_Tex"}
+		}
+	);
+	va3.addVBOSingleAttrib(vb5, 0);
+	va3.addVBOSingleAttrib(vb6, 1);
+
+
+	/* Model transforms (refactor later) */
+	// Floor model transforms: move down
+	glm::mat4 trans_M_FLOOR = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-0.5f,0.0f));
+	// Wall model transform: move down
+	glm::mat4 trans_M_WALL = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.5f, 0.0f));
+	glm::mat4 trans_M_PYR = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.5f, 0.0f));
 
 	// ============================================================
 	/* Game loop */
@@ -116,7 +157,11 @@ int main() {
 		Renderer::init(cam);
 
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::render(shader, va, M_FLOOR);
+		Renderer::render(shader, va, M_FLOOR, trans_M_FLOOR);
+		
+		Renderer::render(shader, va2, M_WALL, trans_M_WALL);
+
+		Renderer::render(shader, va3, M_PYR, trans_M_PYR);
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);

@@ -54,7 +54,7 @@ void Camera::setCamPos(glm::vec3 cp) { Camera::camPos = cp; }
 void Camera::update(GLFWwindow* window, float delta) {
 	/* UPDATE MOVEMENT*/
 	// ===================================================================================================
-	float camSpeed = 2.0f * delta;
+	float camSpeed = 8.0f * delta;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
 		Camera::camPos += camSpeed * Camera::camFront;
 	}

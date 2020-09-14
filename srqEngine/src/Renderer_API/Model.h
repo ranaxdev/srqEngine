@@ -22,7 +22,7 @@ public:
 	std::vector<glm::vec3>& getVertices();
 	std::vector<glm::vec2>& getTextureCoords();
 	std::vector<glm::vec3>& getNormalCoords();
-
+	void update();
 
 private:
 	int totalVertices;
@@ -32,6 +32,7 @@ private:
 
 	Texture tex;
 
+	
 	
 };
 
