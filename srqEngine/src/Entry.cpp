@@ -74,9 +74,9 @@ int main() {
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	
-	Model M_FLOOR = Model("res/models/floor.obj");
+	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/logo.png");
 	
-	
+
 	// ==========================================================================================//
 
 	/* VAO/VBO/Data init */
@@ -98,8 +98,6 @@ int main() {
 	va.addVBOSingleAttrib(vb, 0);
 	va.addVBOSingleAttrib(vb2, 1);
 
-	Texture t = Texture("res/textures/logo.png");
-	t.bind(0);
 
 	// ============================================================
 	/* Game loop */
@@ -118,7 +116,7 @@ int main() {
 		Renderer::init(cam);
 
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::render(shader, va);
+		Renderer::render(shader, va, M_FLOOR);
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);

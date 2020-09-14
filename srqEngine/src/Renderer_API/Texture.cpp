@@ -2,6 +2,8 @@
 #include "../temp/stb_image.h"
 #include "Texture.h"
 
+// All unoccupied slots
+std::vector<unsigned int> Texture::slots = { 16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0 };
 
 Texture::Texture(const char* filepath) : 
 	ID(0),filepath(filepath), localBuffer(nullptr),width(0), height(0), BPP(0)
@@ -35,11 +37,17 @@ Texture::~Texture() {
 
 
 /* Bind and unbind textures from texture slots */
-void Texture::bind(unsigned int slot) const {
-	glActiveTexture(GL_TEXTURE0 + slot);
+void Texture::bind() const {
+	glActiveTexture(GL_TEXTURE0 + slots.back());
 	glBindTexture(GL_TEXTURE_2D, ID);
+	slots.pop_back();
 }
 
+/*
+---------------IMPORTANT NOTE ON UNBINDING------------
+Ensure that the slot that the texture is currently bound to gets freed
+and put back into the slots vector for reuse
+*/
 void Texture::unbind() const {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

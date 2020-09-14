@@ -1,5 +1,8 @@
 #ifndef _H_MODEL
 #define _H_MODEL
+
+#include "Texture.h"
+
 #include<glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
@@ -7,7 +10,7 @@
 // ********** IMPORTED MODEL CLASS ************
 class Model {
 public:
-	Model(const char* filepath);
+	Model(const char* filepath, const char* tex_filepath);
 	~Model();
 	
 	// core data
@@ -26,6 +29,10 @@ private:
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> textureCoords;
 	std::vector<glm::vec3> normalCoords;
+
+	Texture tex;
+
+	
 };
 
 

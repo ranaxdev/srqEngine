@@ -1,10 +1,12 @@
 #include "Model.h"
+#include "../Util/Globals.h"
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-// ******** IMPORTED MODEL **************
-Model::Model(const char* filepath) {
+
+// ******** IMPORTED MODEL **************					// texture initialized
+Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath) {
 	ImportModel import = ImportModel();
 	import.parseObject(filepath);
 	
@@ -31,8 +33,13 @@ Model::Model(const char* filepath) {
 		Model::n_values.push_back((Model::normalCoords[i]).y);
 		Model::n_values.push_back((Model::normalCoords[i]).z);
 	}
+
+	// bind texture
+	tex.bind();
 }
 Model::~Model(){}
+
+
 
 int Model::getTotalVectors() const { return Model::totalVertices; }
 std::vector<glm::vec3>& Model::getVertices() { return Model::vertices; }

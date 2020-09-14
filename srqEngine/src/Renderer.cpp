@@ -20,14 +20,14 @@ void Renderer::init(Camera& cam) {
 }
 
 /* Render to screen */
-void Renderer::render(Shader& shader, VertexArray& va) {
+void Renderer::render(Shader& shader, VertexArray& va, Model& model) {
 
 	// bind shader and set uniforms
 	shader.bind();
-	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
+	shader.setMat4("u_VP", Renderer::viewProjectionMatrix); // view projection matrix
 
 	va.bind();
-	glDrawArrays(GL_TRIANGLES, 0, 1728);
+	glDrawArrays(GL_TRIANGLES, 0, model.getTotalVectors());
 	
 }
 
