@@ -1,5 +1,3 @@
-﻿  Entry.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(107,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Texture.cpp
-  Generating Code...
+﻿  Model.cpp
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Renderer_API\Model.cpp(128,84): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

@@ -16,7 +16,7 @@ Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath)
 	std::vector<float> it = import.getTexCoords();
 	std::vector<float> in = import.getNormals();
 
-	for (int i = 0; i < Model::totalVertices; i++) {
+	for (std::size_t i = 0; i < Model::totalVertices; i++) {
 		Model::vertices.push_back(glm::vec3(iv[i * 3], iv[i * 3 + 1], iv[i * 3 + 2]));
 		Model::textureCoords.push_back(glm::vec2(it[i * 2], it[i * 2 + 1]));
 		Model::normalCoords.push_back(glm::vec3(in[i * 3], in[i * 3 + 1], in[i * 3 + 2]));
@@ -105,9 +105,9 @@ void ImportModel::parseObject(const char* filepath){
 				std::getline(corner_ss, t, '/');
 				std::getline(corner_ss, n, '/');
 
-				int vcount = (std::stoi(v) - 1) * 3;
-				int tcount = (std::stoi(t) - 1) * 2;
-				int ncount = (std::stoi(n) - 1) * 3;
+				std::size_t vcount = ((std::size_t)(std::stoi(v)) - 1) * 3;
+				std::size_t tcount = ((std::size_t)(std::stoi(t)) - 1) * 2;
+				std::size_t ncount = (std::size_t(std::stoi(n)) - 1) * 3;
 
 				ImportModel::vertices.push_back(ImportModel::vertexVals[vcount + 0]);
 				ImportModel::vertices.push_back(ImportModel::vertexVals[vcount + 1]);
