@@ -1,3 +1,5 @@
 ﻿  Entry.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(122,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(127,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Renderer.cpp
+  Generating Code...
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

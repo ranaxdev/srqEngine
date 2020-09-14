@@ -27,7 +27,7 @@ void Renderer::render(Shader& shader, VertexArray& va) {
 	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
 
 	va.bind();
-	glDrawArrays(GL_TRIANGLES, 0, 18);
+	glDrawArrays(GL_TRIANGLES, 0, 1728);
 	
 }
 

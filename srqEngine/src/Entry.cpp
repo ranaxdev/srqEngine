@@ -14,6 +14,7 @@
 #include "Renderer_API/Texture.h"
 #include "Renderer_API/Buffer.h"
 #include "Renderer_API/VertexArray.h"
+#include "Renderer_API/Model.h"
 
 #include "Camera.h"
 
@@ -67,35 +68,38 @@ int main() {
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	
 	
-	/* TEMP - VAO/VBO/Data init */
-	float data[] = {
-		// positions
-		-1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		// front face
-		1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-		// right face
-		1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-		// back face
-		-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		// left face
-		-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f,
-		// base – left front
-		1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f
-		// base – right back
-
-	};
+	//									MODEL LOADING TEST										//
+	// ==========================================================================================
 	
-	float dataTex[] = {
-		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
-		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
-		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
-		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
-	};
+	Model model = Model("res/models/weird.obj");
+	std::vector<glm::vec3> vert = model.getVertices();
+	std::vector<glm::vec2> tex = model.getTextureCoords();
+	std::vector<glm::vec3> norm = model.getNormalCoords();
+	
+	std::vector<float> pvalues;
+	std::vector<float> tvalues;
+	std::vector<float> nvalues;
+	
+	for (int i = 0; i < model.getTotalVectors(); i++) {
+		pvalues.push_back((vert[i]).x);
+		pvalues.push_back((vert[i]).y);
+		pvalues.push_back((vert[i]).z);
+		tvalues.push_back((tex[i]).s);
+		tvalues.push_back((tex[i]).t);
+		nvalues.push_back((norm[i]).x);
+		nvalues.push_back((norm[i]).y);
+		nvalues.push_back((norm[i]).z);
+	}
+	
+	std::cout << model.getTotalVectors() << std::endl;
+	
+	// ==========================================================================================//
 
-	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(data, (unsigned int) (sizeof(data)));
-	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(dataTex, (unsigned int)(sizeof(dataTex)));
+
+	
+	/* TEMP - VAO/VBO/Data init */
+	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&pvalues[0], (unsigned int)(pvalues.size()*sizeof(unsigned int)));
+	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(&tvalues[0], (unsigned int)(tvalues.size()*sizeof(unsigned int)));
 	
 	vb->setlayout(
 		{
@@ -114,6 +118,7 @@ int main() {
 
 	Texture t = Texture("res/textures/logo.png");
 	t.bind(0);
+
 	// ============================================================
 	/* Game loop */
 	// ============================================================
