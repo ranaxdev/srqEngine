@@ -6,9 +6,9 @@ Planned implementations for current phase
 - Queue util (sig. generation)    ❌
 - Entity component system         ✔️
 - Renderer API                    ✔️
-- Renderer                        ❌
+- Renderer                        ✔️
 - GUI (Debug)                     ❌
-- Textured models                 ❌
+- Textured models                 ✔️
 - FPS Camera                      ✔️
 - Timed game loop                 ✔️
 </pre>
