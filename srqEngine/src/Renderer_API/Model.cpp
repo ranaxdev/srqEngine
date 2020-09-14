@@ -35,20 +35,36 @@ Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath)
 		Model::data.push_back((Model::normalCoords[i]).z);
 	}
 	
+	
 	// bind texture
 	Model::tex.bind();
 }
 Model::~Model(){}
 
+/* Update model */
 void Model::update() {
 	Model::tex.bind();
+}
+
+/* Init model (binding) to VA */
+void Model::bind() {
+	va = VertexArray();
+	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&(Model::data[0]), (unsigned int)(Model::data.size() * sizeof(unsigned int)));
+	vb->setlayout(
+		{
+			{DataType::Float3, "a_pos"},
+			{DataType::Float2, "a_tex"},
+			{DataType::Float3, "a_norm"}
+		}
+	);
+	va.addVBO(vb);
 }
 
 int Model::getTotalVectors() const { return Model::totalVertices; }
 std::vector<glm::vec3>& Model::getVertices() { return Model::vertices; }
 std::vector<glm::vec2>& Model::getTextureCoords() { return Model::textureCoords; }
 std::vector<glm::vec3>& Model::getNormalCoords() { return Model::normalCoords; }
-
+VertexArray& Model::getVA() { return Model::va;  }
 
 
 // =========================================================================

@@ -2,7 +2,8 @@
 #define _H_MODEL
 
 #include "Texture.h"
-
+#include "VertexArray.h"
+#include "Buffer.h"
 #include<glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
@@ -20,7 +21,9 @@ public:
 	std::vector<glm::vec3>& getVertices();
 	std::vector<glm::vec2>& getTextureCoords();
 	std::vector<glm::vec3>& getNormalCoords();
+	VertexArray& getVA();
 	void update();
+	void bind();
 
 private:
 	int totalVertices;
@@ -28,6 +31,7 @@ private:
 	std::vector<glm::vec2> textureCoords;
 	std::vector<glm::vec3> normalCoords;
 
+	VertexArray va;
 	Texture tex;
 
 	

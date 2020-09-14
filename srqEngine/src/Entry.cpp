@@ -67,52 +67,20 @@ int main() {
 	glDepthFunc(GL_LEQUAL);
 
 	/* Setup shaders */
-	
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
-	
 	
 	//									LOAD MODELS     										//
 	// ==========================================================================================
-	
+	// declare models
 	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png"); // uses floor texture
 	Model M_WALL = Model("res/models/map.obj", "res/textures/brick.png");
 	Model M_PYR = Model("res/models/pyr.obj", "res/textures/pyr.png");
-
+	// bind them (initialization - association with VAOs)
+	M_FLOOR.bind();
+	M_WALL.bind();
+	M_PYR.bind();
 	// ==========================================================================================//
 
-	// VBO VAO setup
-	VertexArray va = VertexArray();
-	VertexArray va2 = VertexArray();
-	VertexArray va3 = VertexArray();
-	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&(M_FLOOR.data[0]), (unsigned int)(M_FLOOR.data.size() * sizeof(unsigned int)));
-	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(&(M_WALL.data[0]), (unsigned int)(M_WALL.data.size() * sizeof(unsigned int)));
-	std::shared_ptr<VertexBuffer> vb3 = std::make_shared<VertexBuffer>(&(M_PYR.data[0]), (unsigned int)(M_PYR.data.size() * sizeof(unsigned int)));
-
-	vb->setlayout(
-		{
-			{DataType::Float3, "a_pos"},
-			{DataType::Float2, "a_tex"},
-			{DataType::Float3, "a_norm"}
-		}
-	);
-
-	vb2->setlayout(
-		{
-			{DataType::Float3, "a_pos"},
-			{DataType::Float2, "a_tex"},
-			{DataType::Float3, "a_norm"}
-		}
-	);
-	vb3->setlayout(
-		{
-			{DataType::Float3, "a_pos"},
-			{DataType::Float2, "a_tex"},
-			{DataType::Float3, "a_norm"}
-		}
-	);
-	va.addVBO(vb);
-	va2.addVBO(vb2);
-	va3.addVBO(vb3);
 
 	/* Model transforms (refactor later) */
 	// Floor model transforms: move down
@@ -138,9 +106,10 @@ int main() {
 		Renderer::init(cam);
 
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::render(shader, va, M_FLOOR, trans_M_FLOOR);
-		Renderer::render(shader, va2, M_WALL, trans_M_WALL);
-		Renderer::render(shader, va3, M_PYR, trans_M_PYR);
+		Renderer::render(shader, M_FLOOR.getVA() , M_FLOOR, trans_M_FLOOR);
+		Renderer::render(shader, M_WALL.getVA(), M_WALL, trans_M_WALL);
+		Renderer::render(shader, M_PYR.getVA(), M_PYR, trans_M_PYR);
+
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);
 
