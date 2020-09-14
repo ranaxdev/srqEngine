@@ -63,6 +63,7 @@ int main() {
 	glViewport(0, 0, 800, 600);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+
 	/* Setup shaders */
 	
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
@@ -71,7 +72,7 @@ int main() {
 	//									MODEL LOADING TEST										//
 	// ==========================================================================================
 	
-	Model model = Model("res/models/weird.obj");
+	Model model = Model("res/models/cube2.obj");
 	std::vector<glm::vec3> vert = model.getVertices();
 	std::vector<glm::vec2> tex = model.getTextureCoords();
 	std::vector<glm::vec3> norm = model.getNormalCoords();
@@ -95,8 +96,6 @@ int main() {
 	
 	// ==========================================================================================//
 
-
-	
 	/* TEMP - VAO/VBO/Data init */
 	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&pvalues[0], (unsigned int)(pvalues.size()*sizeof(unsigned int)));
 	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(&tvalues[0], (unsigned int)(tvalues.size()*sizeof(unsigned int)));
