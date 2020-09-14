@@ -36,6 +36,16 @@ void VertexArray::addVBO(const std::shared_ptr<VertexBuffer>& vbo) {
 	VertexArray::vbuffers.push_back(vbo);
 }
 
+/* Binding to a specific index ([WARNING] - USE ONLY FOR TESTING) */
+void VertexArray::addVBOSingleAttrib(const std::shared_ptr<VertexBuffer>& vbo, unsigned int index) {
+	glBindVertexArray(VertexArray::ID);
+	vbo->bind();
+	for (const auto& element : vbo->getlayout()) {
+		glVertexAttribPointer(index, element.count, GL_DATA_TYPE_LOOKUP(element.type), element.normalized ? GL_TRUE : GL_FALSE, vbo->getlayout().getStride(), (const void*)(element.offset));
+		glEnableVertexAttribArray(index);
+	}
+	VertexArray::vbuffers.push_back(vbo);
+}
 
 /* To read chunks from vertices */
 void VertexArray::setEBO(const std::shared_ptr<IndexBuffer>& ebo) {

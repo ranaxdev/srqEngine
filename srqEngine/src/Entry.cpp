@@ -60,32 +60,60 @@ int main() {
 
 	/* Config OpenGL options */
 	glViewport(0, 0, 800, 600);
-	
-
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 	/* Setup shaders */
+	
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	
 	
 	/* TEMP - VAO/VBO/Data init */
 	float data[] = {
-		0.0f, 0.5f, 0.0f,	
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f
+		// positions
+		-1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+		// front face
+		1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		// right face
+		1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		// back face
+		-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+		// left face
+		-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f,
+		// base – left front
+		1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f
+		// base – right back
+
 	};
-	unsigned int indices[] = { 0, 1, 2 };
-	std::shared_ptr<IndexBuffer> ib = std::make_shared<IndexBuffer>(indices, (unsigned int) (sizeof(indices)/sizeof(unsigned int)));
+	
+	float dataTex[] = {
+		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
+		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
+		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
+		0.0f, 0.0f, 1.0f, 0.0f, 0.5f, 1.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+	};
+
 	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(data, (unsigned int) (sizeof(data)));
+	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(dataTex, (unsigned int)(sizeof(dataTex)));
+	
 	vb->setlayout(
 		{
 			{DataType::Float3, "a_Pos"}
 		}
 	);
+	vb2->setlayout(
+		{
+			{DataType::Float2, "a_Tex"}
+		}
+	);
+
 	VertexArray va = VertexArray();
-	va.addVBO(vb);
-	va.setEBO(ib);
+	va.addVBOSingleAttrib(vb, 0);
+	va.addVBOSingleAttrib(vb2, 1);
 
-	
-
+	Texture t = Texture("res/textures/logo.png");
+	t.bind(0);
 	// ============================================================
 	/* Game loop */
 	// ============================================================
@@ -95,10 +123,9 @@ int main() {
 		delta = curr - last;
 		last = curr;
 
-		
-		
+
 		glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		/* INIT RENDERER */
 		Renderer::init(cam);

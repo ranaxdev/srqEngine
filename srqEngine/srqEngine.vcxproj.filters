@@ -101,5 +101,14 @@
     <Image Include="res\textures\logo.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\textures\logo2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\logo3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\brick.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
