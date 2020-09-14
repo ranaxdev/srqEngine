@@ -1,12 +1,3 @@
-﻿  Camera.cpp
-  Entry.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(99,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(155,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(156,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(159,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(160,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(161,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(162,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Renderer.cpp
-  Generating Code...
+﻿  Entry.cpp
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(94,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

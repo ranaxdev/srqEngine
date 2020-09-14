@@ -8,7 +8,7 @@ public:
 	Camera();
 	~Camera();
 
-	void update();
+	void update(GLFWwindow* window, float delta);
 	glm::mat4& getVP();
 
 	glm::vec3& getCamFront();
@@ -29,6 +29,10 @@ private:
 
 	float yaw;
 	float pitch;
+	float lastX;
+	float lastY;
+	
+	bool initmouse;
 
 	void recalcVP();
 };

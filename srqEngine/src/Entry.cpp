@@ -24,16 +24,11 @@ extern const int MAX_ENTITIES;
 
 float delta = 0.0f;
 float last = 0.0f;
-float yaw = -90.0f;
-float pitch = 0.0f;
-float lastX = 800.0f / 2.0f;
-float lastY = 600.0f / 2.0f;
-bool initmouse = true;
 
 /*---------------- TEMPORARY - callback declarations ------------------- */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void mousePoll(GLFWwindow* window);
-void keysPoll(GLFWwindow* window);
+
+
 /* Camera */
 Camera cam = Camera();
 
@@ -99,9 +94,8 @@ int main() {
 		float curr = glfwGetTime();
 		delta = curr - last;
 		last = curr;
-		// process input (TEMP)
-		keysPoll(mainWindow);
-		mousePoll(mainWindow);
+
+		
 		
 		glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -115,8 +109,11 @@ int main() {
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);
 
-		/* Poll events and input */
+
+		// PROCESS INPUT (TEMP)
 		glfwPollEvents();
+		cam.update(mainWindow, delta);
+		
 	}
 
 	glfwTerminate();
@@ -127,53 +124,4 @@ int main() {
 /* --------------------------- TEMPORARY - DEFINE CALLBACKS ----------------------  */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
-}
-
-void keysPoll(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
-	float camSpeed = 2.0f * delta;
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
-		cam.setCamPos(cam.getCamPos() += camSpeed * (cam.getCamFront()));
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // move back
-		cam.setCamPos(cam.getCamPos() -= camSpeed * (cam.getCamFront()));
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { // move left
-		cam.setCamPos(cam.getCamPos() -= glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp())) * camSpeed);
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // move right
-		cam.setCamPos(cam.getCamPos() += glm::normalize(glm::cross(cam.getCamFront(), cam.getCamUp())) * camSpeed);
-	}
-}
-void mousePoll(GLFWwindow* window) {
-	double xpos;
-	double ypos;
-	glfwGetCursorPos(window, &xpos, &ypos);
-	if (initmouse) {
-		lastX = xpos;
-		lastY = ypos;
-		initmouse = false;
-	}
-	float xoff = xpos - lastX;
-	float yoff = lastY - ypos;
-	lastX = xpos;
-	lastY = ypos;
-
-	float sense = 0.1f;
-	xoff *= sense;
-	yoff *= sense;
-
-	yaw += xoff;
-	pitch += yoff;
-
-	if (pitch > 89.0f) { pitch = 89.0f; }
-	if (pitch < -89.0f) { pitch = -89.0f; }
-
-	glm::vec3 newCamFront;
-	newCamFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	newCamFront.y = sin(glm::radians(pitch));
-	newCamFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cam.setCamFront(newCamFront);
 }
