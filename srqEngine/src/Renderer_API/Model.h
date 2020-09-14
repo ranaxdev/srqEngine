@@ -9,7 +9,12 @@ class Model {
 public:
 	Model(const char* filepath);
 	~Model();
-
+	
+	// core data
+	std::vector<float> v_values;
+	std::vector<float> t_values;
+	std::vector<float> n_values;
+	
 	int getTotalVectors() const;
 	std::vector<glm::vec3>& getVertices();
 	std::vector<glm::vec2>& getTextureCoords();

@@ -22,6 +22,8 @@
 
 /* GLOBALS */
 extern const int MAX_ENTITIES;
+extern const int SCREEN_WIDTH;
+extern const int SCREEN_HEIGHT;
 
 float delta = 0.0f;
 float last = 0.0f;
@@ -41,7 +43,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Main window */
-	GLFWwindow* mainWindow = glfwCreateWindow(800, 600, "srqEngine", NULL, NULL);
+	GLFWwindow* mainWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "srqEngine", NULL, NULL);
 	if (mainWindow == NULL) {
 		std::cout << "[ERROR] Failed to create window!" << std::endl;
 		glfwTerminate();
@@ -60,7 +62,7 @@ int main() {
 	}
 
 	/* Config OpenGL options */
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
@@ -69,36 +71,17 @@ int main() {
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	
 	
-	//									MODEL LOADING TEST										//
+	//									LOAD MODELS     										//
 	// ==========================================================================================
 	
-	Model model = Model("res/models/cube2.obj");
-	std::vector<glm::vec3> vert = model.getVertices();
-	std::vector<glm::vec2> tex = model.getTextureCoords();
-	std::vector<glm::vec3> norm = model.getNormalCoords();
+	Model M_FLOOR = Model("res/models/floor.obj");
 	
-	std::vector<float> pvalues;
-	std::vector<float> tvalues;
-	std::vector<float> nvalues;
-	
-	for (int i = 0; i < model.getTotalVectors(); i++) {
-		pvalues.push_back((vert[i]).x);
-		pvalues.push_back((vert[i]).y);
-		pvalues.push_back((vert[i]).z);
-		tvalues.push_back((tex[i]).s);
-		tvalues.push_back((tex[i]).t);
-		nvalues.push_back((norm[i]).x);
-		nvalues.push_back((norm[i]).y);
-		nvalues.push_back((norm[i]).z);
-	}
-	
-	std::cout << model.getTotalVectors() << std::endl;
 	
 	// ==========================================================================================//
 
-	/* TEMP - VAO/VBO/Data init */
-	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&pvalues[0], (unsigned int)(pvalues.size()*sizeof(unsigned int)));
-	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(&tvalues[0], (unsigned int)(tvalues.size()*sizeof(unsigned int)));
+	/* VAO/VBO/Data init */
+	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&(M_FLOOR.v_values[0]), (unsigned int)(M_FLOOR.v_values.size()*sizeof(unsigned int)));
+	std::shared_ptr<VertexBuffer> vb2 = std::make_shared<VertexBuffer>(&(M_FLOOR.t_values[0]), (unsigned int)(M_FLOOR.v_values.size()*sizeof(unsigned int)));
 	
 	vb->setlayout(
 		{

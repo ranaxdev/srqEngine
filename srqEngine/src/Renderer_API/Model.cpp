@@ -19,6 +19,18 @@ Model::Model(const char* filepath) {
 		Model::textureCoords.push_back(glm::vec2(it[i * 2], it[i * 2 + 1]));
 		Model::normalCoords.push_back(glm::vec3(in[i * 3], in[i * 3 + 1], in[i * 3 + 2]));
 	}
+
+	// generate useable attrib vectors
+	for (int i = 0; i < Model::totalVertices; i++) {
+		Model::v_values.push_back((Model::vertices[i]).x);
+		Model::v_values.push_back((Model::vertices[i]).y);
+		Model::v_values.push_back((Model::vertices[i]).z);
+		Model::t_values.push_back((Model::textureCoords[i]).s);
+		Model::t_values.push_back((Model::textureCoords[i]).t);
+		Model::n_values.push_back((Model::normalCoords[i]).x);
+		Model::n_values.push_back((Model::normalCoords[i]).y);
+		Model::n_values.push_back((Model::normalCoords[i]).z);
+	}
 }
 Model::~Model(){}
 
@@ -40,8 +52,6 @@ ImportModel::~ImportModel(){}
 /* Open object file and parse vertices, texture coordinates and normals */
 void ImportModel::parseObject(const char* filepath){
 	float x, y, z;
-	std::string total_data;
-
 	std::ifstream filestream(filepath, std::ios::in);
 	std::string line = "";
 
