@@ -23,17 +23,18 @@ Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath)
 	}
 
 	// generate useable attrib vectors
+	
 	for (int i = 0; i < Model::totalVertices; i++) {
-		Model::v_values.push_back((Model::vertices[i]).x);
-		Model::v_values.push_back((Model::vertices[i]).y);
-		Model::v_values.push_back((Model::vertices[i]).z);
-		Model::t_values.push_back((Model::textureCoords[i]).s);
-		Model::t_values.push_back((Model::textureCoords[i]).t);
-		Model::n_values.push_back((Model::normalCoords[i]).x);
-		Model::n_values.push_back((Model::normalCoords[i]).y);
-		Model::n_values.push_back((Model::normalCoords[i]).z);
+		Model::data.push_back((Model::vertices[i]).x);
+		Model::data.push_back((Model::vertices[i]).y);
+		Model::data.push_back((Model::vertices[i]).z);
+		Model::data.push_back((Model::textureCoords[i]).s);
+		Model::data.push_back((Model::textureCoords[i]).t);
+		Model::data.push_back((Model::normalCoords[i]).x);
+		Model::data.push_back((Model::normalCoords[i]).y);
+		Model::data.push_back((Model::normalCoords[i]).z);
 	}
-
+	
 	// bind texture
 	Model::tex.bind();
 }

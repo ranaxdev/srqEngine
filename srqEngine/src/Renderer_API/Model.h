@@ -14,9 +14,7 @@ public:
 	~Model();
 	
 	// core data
-	std::vector<float> v_values;
-	std::vector<float> t_values;
-	std::vector<float> n_values;
+	std::vector<float> data;
 	
 	int getTotalVectors() const;
 	std::vector<glm::vec3>& getVertices();
