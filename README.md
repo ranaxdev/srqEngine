@@ -9,6 +9,7 @@ Planned implementations for current phase
 - Renderer                        ✔️
 - GUI (Debug)                     ➡️ Deferred to challenge week
 - Textured models                 ✔️
+- Custom Model Loader             ✔️
 - FPS Camera                      ✔️
 - Timed game loop                 ✔️
 </pre>
