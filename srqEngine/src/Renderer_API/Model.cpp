@@ -35,10 +35,11 @@ Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath)
 		Model::data.push_back((Model::normalCoords[i]).z);
 	}
 	
-	
 	// bind texture
 	Model::tex.bind();
 }
+
+/* Free memory */
 Model::~Model(){}
 
 /* Update model */
@@ -58,13 +59,16 @@ void Model::bind() {
 		}
 	);
 	va.addVBO(vb);
+
+
 }
 
-int Model::getTotalVectors() const { return Model::totalVertices; }
+/* GETTERS */
+int Model::getTotalVectors() const { return Model::totalVertices; } // total number of vectors
 std::vector<glm::vec3>& Model::getVertices() { return Model::vertices; }
 std::vector<glm::vec2>& Model::getTextureCoords() { return Model::textureCoords; }
 std::vector<glm::vec3>& Model::getNormalCoords() { return Model::normalCoords; }
-VertexArray& Model::getVA() { return Model::va;  }
+VertexArray& Model::getVA() { return Model::va;  } // Vertex array this model is bound to
 
 
 // =========================================================================

@@ -7,7 +7,9 @@
 
 #include<iostream>
 
+
 #include "Util/Globals.h"
+
 
 #include "Renderer.h"
 #include "Renderer_API/Shader.h"
@@ -79,6 +81,7 @@ int main() {
 	M_FLOOR.bind();
 	M_WALL.bind();
 	M_PYR.bind();
+
 	// ==========================================================================================//
 
 
@@ -104,11 +107,11 @@ int main() {
 
 		/* INIT RENDERER */
 		Renderer::init(cam);
-
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::render(shader, M_FLOOR.getVA() , M_FLOOR, trans_M_FLOOR);
+		Renderer::render(shader, M_FLOOR.getVA(), M_FLOOR, trans_M_FLOOR);
 		Renderer::render(shader, M_WALL.getVA(), M_WALL, trans_M_WALL);
 		Renderer::render(shader, M_PYR.getVA(), M_PYR, trans_M_PYR);
+
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);
