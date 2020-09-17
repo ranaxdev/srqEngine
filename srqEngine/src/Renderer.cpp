@@ -19,11 +19,11 @@ void Renderer::init(Camera& cam) {
 	Renderer::viewProjectionMatrix = cam.getVP(); // recalulates automatically
 }
 
-/* Render to screen */
-void Renderer::render(Shader& shader, VertexArray& va, Model& model, glm::mat4 transform) {
-
-	// bind shader and set uniforms
-	model.update();
+/* Render model to screen */
+void Renderer::renderModel(Shader& shader, VertexArray& va, Model& model, glm::mat4 transform) 
+{
+	model.update(); // update model (just binds texture for now)
+	// bind shader and set uniform
 	shader.bind();
 	shader.setMat4("u_VP", Renderer::viewProjectionMatrix); // view projection matrix
 	shader.setMat4("u_M", transform); // model matrix
@@ -31,5 +31,16 @@ void Renderer::render(Shader& shader, VertexArray& va, Model& model, glm::mat4 t
 	va.bind();
 	glDrawArrays(GL_TRIANGLES, 0, model.getTotalVectors());
 	
+}
+/* Render plain data to screen */
+void Renderer::renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform)
+{
+	// bind shader and set uniforms
+	shader.bind();
+	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
+	shader.setMat4("u_M", transform);
+
+	va.bind();
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 

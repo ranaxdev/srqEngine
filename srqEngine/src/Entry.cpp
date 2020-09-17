@@ -70,7 +70,8 @@ int main() {
 
 	/* Setup shaders */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
-	
+	Shader lightShader = Shader("res/shaders/vertexlight.shader", "res/shaders/fragmentlight.shader");
+	Shader lightsourceShader = Shader("res/shaders/vertexlight.shader", "res/shaders/lightsourcefragment.shader");
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	// declare models
@@ -83,14 +84,66 @@ int main() {
 	M_PYR.bind();
 
 	// ==========================================================================================//
+	float cubeData[] = {
+	-0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f,  0.5f, -0.5f,
+	 0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+
+	-0.5f, -0.5f,  0.5f,
+	 0.5f, -0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
+
+	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+
+	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+
+	-0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f,  0.5f,
+	 0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f, -0.5f,
+
+	-0.5f,  0.5f, -0.5f,
+	 0.5f,  0.5f, -0.5f,
+	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f, -0.5f
+	};
+	VertexArray va = VertexArray();
+	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(cubeData, sizeof(cubeData));
+	vb->setlayout(
+		{
+			{DataType::Float3, "a_Pos"}
+		}
+	);
+	va.addVBO(vb);
 
 
-	/* Model transforms (refactor later) */
-	// Floor model transforms: move down
-	glm::mat4 trans_M_FLOOR = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-0.5f,0.0f));
-	// Wall model transform: move down
-	glm::mat4 trans_M_WALL = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.5f, 0.0f));
-	glm::mat4 trans_M_PYR = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.5f, 0.0f));
+	/* -----------------------------Transformations---------------------- */
+	// light source transforms
+	glm::vec3 lightsourcePos = glm::vec3(1.2f, 1.0f, 2.0f);
+	glm::mat4 trans_lightsrc = glm::translate(glm::mat4(1.0f), lightsourcePos);
+	trans_lightsrc = glm::scale(trans_lightsrc, glm::vec3(0.2f));
+	// ---------------------------------------------------------------------
+
 
 	// ============================================================
 	/* Game loop */
@@ -102,16 +155,23 @@ int main() {
 		last = curr;
 
 
-		glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		/* INIT RENDERER */
 		Renderer::init(cam);
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::render(shader, M_FLOOR.getVA(), M_FLOOR, trans_M_FLOOR);
-		Renderer::render(shader, M_WALL.getVA(), M_WALL, trans_M_WALL);
-		Renderer::render(shader, M_PYR.getVA(), M_PYR, trans_M_PYR);
+		// render light source 
+		Renderer::renderPlain(lightsourceShader, va, trans_lightsrc);
 
+		//render light (set uniforms before)
+		lightShader.bind();
+		glm::vec3 lightcolor = glm::vec3(1.0f, 1.0f, 1.0f);
+		lightShader.setVec3("obj_light", lightcolor);
+
+		glm::vec3 objcolor = glm::vec3(1.0f, 0.5f, 0.33f);
+		lightShader.setVec3("lightColor", objcolor);
+		Renderer::renderPlain(lightShader, va);
 
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);

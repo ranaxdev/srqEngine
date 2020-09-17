@@ -183,7 +183,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentgen.shader" />
+    <None Include="res\shaders\fragmentlight.shader" />
+    <None Include="res\shaders\lightsourcefragment.shader" />
     <None Include="res\shaders\vertexgen.shader" />
+    <None Include="res\shaders\vertexlight.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\brick.png" />

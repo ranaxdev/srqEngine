@@ -102,6 +102,9 @@
   <ItemGroup>
     <None Include="res\shaders\vertexgen.shader" />
     <None Include="res\shaders\fragmentgen.shader" />
+    <None Include="res\shaders\vertexlight.shader" />
+    <None Include="res\shaders\fragmentlight.shader" />
+    <None Include="res\shaders\lightsourcefragment.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\logo.png">
