@@ -71,12 +71,12 @@ int main() {
 	/* --------------------------------------Shader declarations------------------------------ */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	Shader lightShader = Shader("res/shaders/vertexlight.shader", "res/shaders/fragmentlight.shader");
-	Shader lightsourceShader = Shader("res/shaders/vertexlight.shader", "res/shaders/lightsourcefragment.shader");
+	Shader lightsourceShader = Shader("res/shaders/lightsourcevertex.shader", "res/shaders/lightsourcefragment.shader");
 	// ==================================== Shader configurations ===================================
 	// light shader
-	lightShader.AddVec3Config("obj_light", 1.0f, 1.0f, 1.0f);
-	lightShader.AddVec3Config("lightColor", 1.0f, 0.5f, 0.33f);
-
+	lightShader.AddVec3Config("lightColor", 1.0f, 1.0f, 1.0f);
+	lightShader.AddVec3Config("objColor", 0.2f, 0.3f, 0.8f);
+	//lightShader.AddVec3Config("lightPos", 1.2f, 1.0f, 2.0f);
 	/*-------------------------------------------------------------------------------------------*/
 
 
@@ -93,53 +93,54 @@ int main() {
 
 	// ==========================================================================================//
 	float cubeData[] = {
-	-0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f,  0.5f, -0.5f,
-	 0.5f,  0.5f, -0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-	-0.5f, -0.5f,  0.5f,
-	 0.5f, -0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-	 0.5f,  0.5f,  0.5f,
-	 0.5f,  0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-	-0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f,  0.5f,
-	 0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-	-0.5f,  0.5f, -0.5f,
-	 0.5f,  0.5f, -0.5f,
-	 0.5f,  0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 	VertexArray va = VertexArray();
 	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(cubeData, sizeof(cubeData));
 	vb->setlayout(
 		{
-			{DataType::Float3, "a_Pos"}
+			{DataType::Float3, "a_Pos"},
+			{DataType::Float3, "a_Normal"}
 		}
 	);
 	va.addVBO(vb);
@@ -168,8 +169,23 @@ int main() {
 
 		/* INIT RENDERER */
 		Renderer::init(cam);
+		
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		// render light source 
+		// render light source
+		if (glfwGetKey(mainWindow, GLFW_KEY_0) == GLFW_PRESS) {
+			
+			trans_lightsrc = glm::translate(trans_lightsrc, glm::vec3(-6.0f*delta, 0.0f,0.0f));
+			lightsourcePos.x -= 6.0f * delta;
+			lightShader.bind();
+			lightShader.setVec3("lightPos", lightsourcePos);
+		}
+		if (glfwGetKey(mainWindow, GLFW_KEY_1) == GLFW_PRESS) {
+
+			trans_lightsrc = glm::translate(trans_lightsrc, glm::vec3(6.0f * delta, 0.0f, 0.0f));
+			lightsourcePos.x += 6.0f * delta;
+			lightShader.bind();
+			lightShader.setVec3("lightPos", lightsourcePos);
+		}
 		Renderer::renderPlain(lightsourceShader, va, trans_lightsrc);
 
 		//render light (set uniforms before)

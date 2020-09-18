@@ -35,17 +35,18 @@ void Renderer::renderModel(Shader& shader, VertexArray& va, Model& model, glm::m
 /* Render plain data to screen */
 void Renderer::renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform)
 {
-	// bind shader and set uniforms
+	// bind shader
 	shader.bind();
+
+	// Explicit configurations (due to being applicable to all)
 	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
 	shader.setMat4("u_M", transform);
 	
-	// Run all shader configurations
+	// Run all other shader configurations
 	for (auto& c : shader.getConfig()) {
 		c();
 	}
 
-	
 	va.bind();
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
