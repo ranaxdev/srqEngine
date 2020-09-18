@@ -41,7 +41,7 @@ void Renderer::renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform)
 	shader.setMat4("u_M", transform);
 	
 	// Run all shader configurations
-	for (auto& c : shader.config) {
+	for (auto& c : shader.getConfig()) {
 		c();
 	}
 

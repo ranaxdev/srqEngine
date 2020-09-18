@@ -34,7 +34,6 @@ float last = 0.0f;
 /*---------------- TEMPORARY - callback declarations ------------------- */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-
 /* Camera */
 Camera cam = Camera();
 
@@ -75,14 +74,9 @@ int main() {
 	Shader lightsourceShader = Shader("res/shaders/vertexlight.shader", "res/shaders/lightsourcefragment.shader");
 	// ==================================== Shader configurations ===================================
 	// light shader
-	glm::vec3 lightcolor = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 objcolor = glm::vec3(1.0f, 0.5f, 0.33f);
-	auto lightcolorFunc = [&]() {lightShader.setVec3("obj_light", lightcolor); };
-	auto objcolorFunc = [&]() {lightShader.setVec3("lightColor", objcolor); };
-	lightShader.config.push_back(lightcolorFunc);
-	lightShader.config.push_back(objcolorFunc);
-	
-	
+	lightShader.AddVec3Config("obj_light", 1.0f, 1.0f, 1.0f);
+	lightShader.AddVec3Config("lightColor", 1.0f, 0.5f, 0.33f);
+
 	/*-------------------------------------------------------------------------------------------*/
 
 
@@ -157,7 +151,7 @@ int main() {
 	glm::mat4 trans_lightsrc = glm::translate(glm::mat4(1.0f), lightsourcePos);
 	trans_lightsrc = glm::scale(trans_lightsrc, glm::vec3(0.2f));
 	// ---------------------------------------------------------------------
-
+	
 
 	// ============================================================
 	/* Game loop */

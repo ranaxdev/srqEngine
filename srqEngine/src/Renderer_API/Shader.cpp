@@ -73,9 +73,10 @@ void Shader::setFloat(const char* name, float val) {
 void Shader::setMat4(const char* name, glm::mat4& val) {
 	glUniformMatrix4fv(glGetUniformLocation(Shader::ID, name), 1, GL_FALSE , &val[0][0]);
 }
-void Shader::setVec3(const char* name, glm::vec3& val) {
+void Shader::setVec3(const char* name, glm::vec3 val) {
 	glUniform3fv(glGetUniformLocation(Shader::ID, name), 1, &val[0]);
 }
+
 
 /* Compilation/Linking error checking */
 void Shader::compileErrorChecking(unsigned int shader, const char* type) {
@@ -102,3 +103,20 @@ void Shader::compileErrorChecking(unsigned int shader, const char* type) {
 		}
 	}
 }
+
+
+/* ---------------------Configurations--------------------- */
+// return config DS
+std::vector<std::function<void()>>& Shader::getConfig() {
+	return Shader::config;
+}
+// Add configuration to config DS (lambda-express)
+//	[VECTOR 3]
+void Shader::AddVec3Config(const char* name, float a, float b, float c) {
+	glm::vec3 vec3 = glm::vec3(a, b, c);
+	auto func = [this, name, vec3]() {Shader::setVec3(name, vec3); };
+	Shader::config.push_back(func);
+}
+
+
+/*--------------------------------------------------------*/
