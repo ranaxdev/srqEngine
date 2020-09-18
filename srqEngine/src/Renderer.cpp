@@ -39,7 +39,13 @@ void Renderer::renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform)
 	shader.bind();
 	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
 	shader.setMat4("u_M", transform);
+	
+	// Run all shader configurations
+	for (auto& c : shader.config) {
+		c();
+	}
 
+	
 	va.bind();
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }

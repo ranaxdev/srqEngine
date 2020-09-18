@@ -6,7 +6,7 @@
 #include <glm/gtx/string_cast.hpp>
 
 #include<iostream>
-
+#include <functional>
 
 #include "Util/Globals.h"
 
@@ -19,6 +19,7 @@
 #include "Renderer_API/Model.h"
 
 #include "Camera.h"
+
 
 // ------------------------------------------------
 
@@ -68,10 +69,23 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	/* Setup shaders */
+	/* --------------------------------------Shader declarations------------------------------ */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	Shader lightShader = Shader("res/shaders/vertexlight.shader", "res/shaders/fragmentlight.shader");
 	Shader lightsourceShader = Shader("res/shaders/vertexlight.shader", "res/shaders/lightsourcefragment.shader");
+	// ==================================== Shader configurations ===================================
+	// light shader
+	glm::vec3 lightcolor = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 objcolor = glm::vec3(1.0f, 0.5f, 0.33f);
+	auto lightcolorFunc = [&]() {lightShader.setVec3("obj_light", lightcolor); };
+	auto objcolorFunc = [&]() {lightShader.setVec3("lightColor", objcolor); };
+	lightShader.config.push_back(lightcolorFunc);
+	lightShader.config.push_back(objcolorFunc);
+	
+	
+	/*-------------------------------------------------------------------------------------------*/
+
+
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	// declare models
@@ -165,12 +179,6 @@ int main() {
 		Renderer::renderPlain(lightsourceShader, va, trans_lightsrc);
 
 		//render light (set uniforms before)
-		lightShader.bind();
-		glm::vec3 lightcolor = glm::vec3(1.0f, 1.0f, 1.0f);
-		lightShader.setVec3("obj_light", lightcolor);
-
-		glm::vec3 objcolor = glm::vec3(1.0f, 0.5f, 0.33f);
-		lightShader.setVec3("lightColor", objcolor);
 		Renderer::renderPlain(lightShader, va);
 
 		/* Swap buffers */

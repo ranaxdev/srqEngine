@@ -3,10 +3,9 @@
 
 #include<string>
 #include<vector>
+#include "../Util/Globals.h"
 
 /* Buffer Layout Class & Supplements */
-
-enum class DataType { Float, Float2, Float3, Float4, Mat3, Mat4 }; // To match shader data types
 // size of each type in bytes
 static unsigned int DataTypeSize(DataType type) {
 	switch (type)

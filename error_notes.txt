@@ -1,0 +1,4 @@
+Potential future errors notes:
+
+
+1. Shader lambda configurations may cause crashes on runtime
