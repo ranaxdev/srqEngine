@@ -45,7 +45,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Main window */
-	GLFWwindow* mainWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "srqEngine", NULL, NULL);
+	GLFWwindow* mainWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "srqEngine",NULL, NULL);
 	if (mainWindow == NULL) {
 		std::cout << "[ERROR] Failed to create window!" << std::endl;
 		glfwTerminate();
@@ -84,76 +84,20 @@ int main() {
 	// ==========================================================================================
 	// declare models
 	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png"); // uses floor texture
-	Model M_WALL = Model("res/models/map.obj", "res/textures/brick.png");
-	Model M_PYR = Model("res/models/pyr.obj", "res/textures/pyr.png");
+	Model M_WALL = Model("res/models/bark.obj", "res/textures/bark.jpg");
+	Model M_PYR = Model("res/models/leaves.obj", "res/textures/leaf.jpg");
 	// bind them (initialization - association with VAOs)
 	M_FLOOR.bind();
 	M_WALL.bind();
 	M_PYR.bind();
 
 	// ==========================================================================================//
-	float cubeData[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
-	};
-	VertexArray va = VertexArray();
-	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(cubeData, sizeof(cubeData));
-	vb->setlayout(
-		{
-			{DataType::Float3, "a_Pos"},
-			{DataType::Float3, "a_Normal"}
-		}
-	);
-	va.addVBO(vb);
-
 
 	/* -----------------------------Transformations---------------------- */
-	// light source transforms
-	glm::vec3 lightsourcePos = glm::vec3(1.2f, 1.0f, 2.0f);
-	glm::mat4 trans_lightsrc = glm::translate(glm::mat4(1.0f), lightsourcePos);
-	trans_lightsrc = glm::scale(trans_lightsrc, glm::vec3(0.2f));
-	// ---------------------------------------------------------------------
 	
-
+	// ---------------------------------------------------------------------
+	glm::mat4 trans = glm::rotate(glm::mat4(1.0f), glm::radians(5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	
 	// ============================================================
 	/* Game loop */
 	// ============================================================
@@ -164,33 +108,16 @@ int main() {
 		last = curr;
 
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		/* INIT RENDERER */
 		Renderer::init(cam);
 		
+		trans = glm::rotate(trans, glm::radians(delta* 20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		// render light source
-		if (glfwGetKey(mainWindow, GLFW_KEY_0) == GLFW_PRESS) {
-			
-			trans_lightsrc = glm::translate(trans_lightsrc, glm::vec3(-6.0f*delta, 0.0f,0.0f));
-			lightsourcePos.x -= 6.0f * delta;
-			lightShader.bind();
-			lightShader.setVec3("lightPos", lightsourcePos);
-		}
-		if (glfwGetKey(mainWindow, GLFW_KEY_1) == GLFW_PRESS) {
-
-			trans_lightsrc = glm::translate(trans_lightsrc, glm::vec3(6.0f * delta, 0.0f, 0.0f));
-			lightsourcePos.x += 6.0f * delta;
-			lightShader.bind();
-			lightShader.setVec3("lightPos", lightsourcePos);
-		}
-		Renderer::renderPlain(lightsourceShader, va, trans_lightsrc);
-
-		//render light (set uniforms before)
-		Renderer::renderPlain(lightShader, va);
-
+		Renderer::renderModel(shader, M_PYR.getVA(), M_PYR,trans);
+		Renderer::renderModel(shader, M_WALL.getVA(), M_WALL,trans);
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);
 

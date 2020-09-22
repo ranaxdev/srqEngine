@@ -1,20 +1,3 @@
 ﻿  Entry.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(162,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\xmemory(228,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\memory(1427): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,float(&)[216],unsigned __int64>(_Ty &,float (&)[216],unsigned __int64 &&) noexcept(false)' being compiled
-          with
-          [
-              _Ty=VertexBuffer
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\memory(2071): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<float(&)[216],unsigned __int64>(float (&)[216],unsigned __int64 &&)' being compiled
-          with
-          [
-              _Ty=VertexBuffer
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\memory(2072): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<float(&)[216],unsigned __int64>(float (&)[216],unsigned __int64 &&)' being compiled
-          with
-          [
-              _Ty=VertexBuffer
-          ]
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(139): message : see reference to function template instantiation 'std::shared_ptr<VertexBuffer> std::make_shared<VertexBuffer,float(&)[216],size_t>(float (&)[216],size_t &&)' being compiled
+C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(106,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe
