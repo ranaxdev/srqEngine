@@ -65,16 +65,33 @@ void Shader::unbind() const {
 
 /* Set uniforms quickly utility */
 void Shader::setInt(const char* name, int val) {
-	glUniform1i(glGetUniformLocation(Shader::ID, name), val);
+	// if uniform not found, get it and insert it in the map
+	if (Shader::uniform_location_map.find(name) == Shader::uniform_location_map.end()) {
+		Shader::uniform_location_map[name] = glGetUniformLocation(Shader::ID, name);
+	}
+	// set uniform (get location from map)
+	glUniform1i(Shader::uniform_location_map.at(name), val);
 }
+
 void Shader::setFloat(const char* name, float val) {
-	glUniform1f(glGetUniformLocation(Shader::ID, name), val);
+	if (Shader::uniform_location_map.find(name) == Shader::uniform_location_map.end()) {
+		Shader::uniform_location_map[name] = glGetUniformLocation(Shader::ID, name);
+	}
+	glUniform1f(Shader::uniform_location_map.at(name), val);
 }
+
 void Shader::setMat4(const char* name, glm::mat4& val) {
-	glUniformMatrix4fv(glGetUniformLocation(Shader::ID, name), 1, GL_FALSE , &val[0][0]);
+	if (Shader::uniform_location_map.find(name) == Shader::uniform_location_map.end()) {
+		Shader::uniform_location_map[name] = glGetUniformLocation(Shader::ID, name);
+	}
+	glUniformMatrix4fv(Shader::uniform_location_map.at(name), 1, GL_FALSE , &val[0][0]);
 }
+
 void Shader::setVec3(const char* name, glm::vec3 val) {
-	glUniform3fv(glGetUniformLocation(Shader::ID, name), 1, &val[0]);
+	if (Shader::uniform_location_map.find(name) == Shader::uniform_location_map.end()) {
+		Shader::uniform_location_map[name] = glGetUniformLocation(Shader::ID, name);
+	}
+	glUniform3fv(Shader::uniform_location_map.at(name), 1, &val[0]);
 }
 
 

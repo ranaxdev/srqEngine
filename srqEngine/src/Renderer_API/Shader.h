@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include<vector>
 #include<functional>
-
+#include <unordered_map>
 /* Shader class */
 
 class Shader {
@@ -29,6 +29,7 @@ public:
 private:
 	void compileErrorChecking(unsigned int shader, const char* type);
 	std::vector<std::function<void()>> config;
+	std::unordered_map<const char*, int> uniform_location_map;
 };
 
 #endif

@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "srqEngine", "srqEngine\srqEngine.vcxproj", "{4469D246-CF50-4F98-9037-A961CE999FDF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xsandbox", "sandbox\sandbox.vcxproj", "{1F1E2F9E-8D18-4215-8534-6270C2DBB768}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{4469D246-CF50-4F98-9037-A961CE999FDF}.Release|x64.Build.0 = Release|x64
 		{4469D246-CF50-4F98-9037-A961CE999FDF}.Release|x86.ActiveCfg = Release|Win32
 		{4469D246-CF50-4F98-9037-A961CE999FDF}.Release|x86.Build.0 = Release|Win32
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Debug|x64.ActiveCfg = Debug|x64
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Debug|x64.Build.0 = Debug|x64
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Debug|x86.ActiveCfg = Debug|Win32
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Debug|x86.Build.0 = Debug|Win32
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Release|x64.ActiveCfg = Release|x64
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Release|x64.Build.0 = Release|x64
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Release|x86.ActiveCfg = Release|Win32
+		{1F1E2F9E-8D18-4215-8534-6270C2DBB768}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
