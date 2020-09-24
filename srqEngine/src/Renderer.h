@@ -16,7 +16,8 @@ class Renderer {
 public:
 	Renderer();
 	~Renderer();
-	static void renderModel(Shader& shader, VertexArray& va, Model& model, glm::mat4 transform = glm::mat4(1.0f));
+	static void renderTexModel(Shader& shader, VertexArray& va, Model& model, glm::mat4 transform = glm::mat4(1.0f));
+	static void renderModel(Shader& shader, Model& model, glm::mat4 transform = glm::mat4(1.0f));
 	static void renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform = glm::mat4(1.0f));
 	static void init(Camera& cam);
 private:

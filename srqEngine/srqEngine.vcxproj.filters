@@ -102,10 +102,10 @@
   <ItemGroup>
     <None Include="res\shaders\vertexgen.shader" />
     <None Include="res\shaders\fragmentgen.shader" />
-    <None Include="res\shaders\vertexlight.shader" />
-    <None Include="res\shaders\fragmentlight.shader" />
-    <None Include="res\shaders\lightsourcefragment.shader" />
-    <None Include="res\shaders\lightsourcevertex.shader" />
+    <None Include="res\shaders\lit\lit_vert.shader" />
+    <None Include="res\shaders\lit\lit_frag.shader" />
+    <None Include="res\shaders\lightSource\lightsrc_vert.shader" />
+    <None Include="res\shaders\lightSource\lightsrc_frag.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\logo.png">

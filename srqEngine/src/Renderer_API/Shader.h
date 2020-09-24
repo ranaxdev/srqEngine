@@ -21,6 +21,7 @@ public:
 
 	/* CONFIGS */
 	void AddVec3Config(const char* name, float a, float b, float c);
+	
 
 	/* GETTERS */
 	std::vector<std::function<void()>>& getConfig();

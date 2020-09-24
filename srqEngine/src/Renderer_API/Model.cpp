@@ -5,38 +5,19 @@
 #include <sstream>
 #include <iostream>
 
-// ******** IMPORTED MODEL **************					// texture initialized
-Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath) {
-	ImportModel import = ImportModel();
-	import.parseObject(filepath);
-	
-	Model::totalVertices = import.getTotalVertices();
-
-	std::vector<float> iv = import.getVertices();
-	std::vector<float> it = import.getTexCoords();
-	std::vector<float> in = import.getNormals();
-
-	for (std::size_t i = 0; i < Model::totalVertices; i++) {
-		Model::vertices.push_back(glm::vec3(iv[i * 3], iv[i * 3 + 1], iv[i * 3 + 2]));
-		Model::textureCoords.push_back(glm::vec2(it[i * 2], it[i * 2 + 1]));
-		Model::normalCoords.push_back(glm::vec3(in[i * 3], in[i * 3 + 1], in[i * 3 + 2]));
-	}
-
-	// generate useable attrib vectors
-	
-	for (int i = 0; i < Model::totalVertices; i++) {
-		Model::data.push_back((Model::vertices[i]).x);
-		Model::data.push_back((Model::vertices[i]).y);
-		Model::data.push_back((Model::vertices[i]).z);
-		Model::data.push_back((Model::textureCoords[i]).s);
-		Model::data.push_back((Model::textureCoords[i]).t);
-		Model::data.push_back((Model::normalCoords[i]).x);
-		Model::data.push_back((Model::normalCoords[i]).y);
-		Model::data.push_back((Model::normalCoords[i]).z);
-	}
-	
+// ******** IMPORTED MODEL **************
+// textured model
+Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath), totalVertices(0) {
+	// construct data with model importer
+	Model::constructData(filepath);
 	// bind texture
 	Model::tex.bind();
+}
+
+// Plain model with color
+Model::Model(const char* filepath, glm::vec3 color) :tex("res/textures/logo.png"), totalVertices(0) {
+	Model::constructData(filepath);
+	Model::modelColor = color;
 }
 
 /* Free memory */
@@ -62,6 +43,43 @@ void Model::bind() {
 
 
 }
+// Helper method to construct data sets
+void Model::constructData(const char* filepath) {
+	ImportModel import = ImportModel();
+	import.parseObject(filepath);
+
+	Model::totalVertices = import.getTotalVertices();
+
+	std::vector<float> iv = import.getVertices();
+	std::vector<float> it = import.getTexCoords();
+	std::vector<float> in = import.getNormals();
+
+	for (std::size_t i = 0; i < Model::totalVertices; i++) {
+		Model::vertices.push_back(glm::vec3(iv[i * 3], iv[i * 3 + 1], iv[i * 3 + 2]));
+		Model::textureCoords.push_back(glm::vec2(it[i * 2], it[i * 2 + 1]));
+		Model::normalCoords.push_back(glm::vec3(in[i * 3], in[i * 3 + 1], in[i * 3 + 2]));
+	}
+
+	// generate useable attrib vectors
+
+	for (int i = 0; i < Model::totalVertices; i++) {
+		Model::data.push_back((Model::vertices[i]).x);
+		Model::data.push_back((Model::vertices[i]).y);
+		Model::data.push_back((Model::vertices[i]).z);
+		Model::data.push_back((Model::textureCoords[i]).s);
+		Model::data.push_back((Model::textureCoords[i]).t);
+		Model::data.push_back((Model::normalCoords[i]).x);
+		Model::data.push_back((Model::normalCoords[i]).y);
+		Model::data.push_back((Model::normalCoords[i]).z);
+	}
+
+}
+
+/* SETTERS */
+// set color
+void Model::setColor(float a, float b, float c) {
+	Model::modelColor = glm::vec3(a, b, c);
+}
 
 /* GETTERS */
 int Model::getTotalVectors() const { return Model::totalVertices; } // total number of vectors
@@ -69,7 +87,7 @@ std::vector<glm::vec3>& Model::getVertices() { return Model::vertices; }
 std::vector<glm::vec2>& Model::getTextureCoords() { return Model::textureCoords; }
 std::vector<glm::vec3>& Model::getNormalCoords() { return Model::normalCoords; }
 VertexArray& Model::getVA() { return Model::va;  } // Vertex array this model is bound to
-
+glm::vec3 Model::getColor() { return Model::modelColor; }
 
 // =========================================================================
 // =========================================================================

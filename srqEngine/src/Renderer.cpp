@@ -19,8 +19,8 @@ void Renderer::init(Camera& cam) {
 	Renderer::viewProjectionMatrix = cam.getVP(); // recalulates automatically
 }
 
-/* Render model to screen */
-void Renderer::renderModel(Shader& shader, VertexArray& va, Model& model, glm::mat4 transform) 
+/* Render textured model to screen */
+void Renderer::renderTexModel(Shader& shader, VertexArray& va, Model& model, glm::mat4 transform)
 {
 	model.update(); // update model (just binds texture for now)
 	// bind shader and set uniform
@@ -32,7 +32,24 @@ void Renderer::renderModel(Shader& shader, VertexArray& va, Model& model, glm::m
 	glDrawArrays(GL_TRIANGLES, 0, model.getTotalVectors());
 	
 }
-/* Render plain data to screen */
+
+/* Render colored model to screen */
+void Renderer::renderModel(Shader& shader, Model& model, glm::mat4 transform) {
+	shader.bind();
+	// bind camera uniforms
+	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
+	shader.setMat4("u_M", transform);
+
+	// bind configured uniforms
+	for (auto& c : shader.getConfig()) {
+		c();
+	}
+
+	model.getVA().bind();
+	glDrawArrays(GL_TRIANGLES, 0, model.getTotalVectors());
+}
+
+/* Render plain data straight from a VAO to screen */
 void Renderer::renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform)
 {
 	// bind shader

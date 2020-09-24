@@ -68,35 +68,29 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	/* --------------------------------------Shader declarations------------------------------ */
-	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
-	Shader lightShader = Shader("res/shaders/vertexlight.shader", "res/shaders/fragmentlight.shader");
-	Shader lightsourceShader = Shader("res/shaders/lightsourcevertex.shader", "res/shaders/lightsourcefragment.shader");
-	// ==================================== Shader configurations ===================================
-	// light shader
-	lightShader.AddVec3Config("lightColor", 1.0f, 1.0f, 1.0f);
-	lightShader.AddVec3Config("objColor", 0.2f, 0.3f, 0.8f);
-	//lightShader.AddVec3Config("lightPos", 1.2f, 1.0f, 2.0f);
-	/*-------------------------------------------------------------------------------------------*/
-
-
 	//									LOAD MODELS     										//
 	// ==========================================================================================
-	// declare models
+	// ~t e x t u r e d~
 	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png"); // uses floor texture
-	Model M_WALL = Model("res/models/bark.obj", "res/textures/bark.jpg");
-	Model M_PYR = Model("res/models/leaves.obj", "res/textures/leaf.jpg");
+	// ~p l a i n~
+	Model M_LITCUBE = Model("res/models/cube2.obj", glm::vec3(0.2f, 0.3f, 0.8f));
+	Model M_LIGHT = Model("res/models/cube2.obj", glm::vec3(1.0f, 1.0f, 1.0f));
+	
 	// bind them (initialization - association with VAOs)
 	M_FLOOR.bind();
-	M_WALL.bind();
-	M_PYR.bind();
-
-	// ==========================================================================================//
-
-	/* -----------------------------Transformations---------------------- */
+	M_LITCUBE.bind();
+	M_LIGHT.bind();
 	
-	// ---------------------------------------------------------------------
-	glm::mat4 trans = glm::rotate(glm::mat4(1.0f), glm::radians(5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	/* -----------------------------Transformations---------------------- */
+	glm::vec3 light_position = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::mat4 light_transform = glm::mat4(1.0f);
+
+	/* --------------------------------------Shader declarations------------------------------ */
+	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
+	Shader litshader = Shader("res/shaders/lit/lit_vert.shader", "res/shaders/lit/lit_frag.shader");
+	Shader lightsrcshader = Shader("res/shaders/lightSource/lightsrc_vert.shader", "res/shaders/lightSource/lightsrc_frag.shader");
+	// ==================================== Shader configurations ===================================
+
 	
 	// ============================================================
 	/* Game loop */
@@ -107,20 +101,42 @@ int main() {
 		delta = curr - last;
 		last = curr;
 
-
-		glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		/* INIT RENDERER */
 		Renderer::init(cam);
 		
-		trans = glm::rotate(trans, glm::radians(delta* 20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		/* DYNAMIC TRANSFORMATIOSN */
+		// light 1 transforms
+		light_position.x = sin(glfwGetTime()) * 3.0f;
+		light_position.z = cos(glfwGetTime()) * 3.0f;
+		light_position.y = 0.0f;
+
+		
+		light_transform = glm::mat4(1.0f);
+		light_transform = glm::translate(light_transform, light_position);
+		light_transform = glm::scale(light_transform, glm::vec3(0.2f));
+
+		litshader.bind();
+		litshader.setVec3("lightPos", light_position);
+
+		M_LIGHT.setColor(1.0f,1.0f,1.0f);
+		litshader.setVec3("objectColor", M_LITCUBE.getColor());
+		litshader.setVec3("lightColor", M_LIGHT.getColor());
+
+		lightsrcshader.bind();
+		lightsrcshader.setVec3("lightColor", M_LIGHT.getColor());
+
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::renderModel(shader, M_PYR.getVA(), M_PYR,trans);
-		Renderer::renderModel(shader, M_WALL.getVA(), M_WALL,trans);
+		Renderer::renderModel(lightsrcshader, M_LIGHT, light_transform);
+		
+		Renderer::renderModel(litshader, M_LITCUBE);
+		
+
+
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);
-
 
 		// PROCESS INPUT (TEMP)
 		glfwPollEvents();

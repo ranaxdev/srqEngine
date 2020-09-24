@@ -11,7 +11,8 @@
 // ********** IMPORTED MODEL CLASS ************
 class Model {
 public:
-	Model(const char* filepath, const char* tex_filepath);
+	Model(const char* filepath, const char* tex_filepath); // Textured Model
+	Model(const char* filepath, glm::vec3 color = glm::vec3(1.0f, 0.0f, 0.0f)); // Plain model (default red)
 	~Model();
 	
 	// core data
@@ -21,7 +22,12 @@ public:
 	std::vector<glm::vec3>& getVertices();
 	std::vector<glm::vec2>& getTextureCoords();
 	std::vector<glm::vec3>& getNormalCoords();
+
 	VertexArray& getVA();
+	
+	glm::vec3 getColor();
+	void setColor(float a, float b, float c);
+
 	void update();
 	void bind();
 
@@ -31,8 +37,12 @@ private:
 	std::vector<glm::vec2> textureCoords;
 	std::vector<glm::vec3> normalCoords;
 
+	glm::vec3 modelColor;
+
 	VertexArray va;
 	Texture tex;
+
+	void constructData(const char* filepath);
 
 	
 	
