@@ -10,6 +10,8 @@ public:
 
 	void update(GLFWwindow* window, float delta);
 	glm::mat4& getVP();
+	glm::mat4& getView();
+	glm::mat4& getProjection();
 
 	glm::vec3& getCamFront();
 	glm::vec3& getCamPos();
@@ -35,6 +37,7 @@ private:
 	bool initmouse;
 
 	void recalcVP();
+	
 };
 
 #endif

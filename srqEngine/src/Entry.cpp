@@ -10,16 +10,15 @@
 
 #include "Util/Globals.h"
 
-
 #include "Renderer.h"
 #include "Renderer_API/Shader.h"
 #include "Renderer_API/Texture.h"
 #include "Renderer_API/Buffer.h"
 #include "Renderer_API/VertexArray.h"
 #include "Renderer_API/Model.h"
+#include "Renderer_API/Skybox.h"
 
 #include "Camera.h"
-
 
 // ------------------------------------------------
 
@@ -67,37 +66,36 @@ int main() {
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_CCW);
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	// ~t e x t u r e d~
 	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png"); // uses floor texture
+	Model M_CUBE = Model("res/models/cube2.obj", "res/textures/brick.png");
 	// ~p l a i n~
-	Model M_LITCUBE = Model("res/models/cube2.obj", glm::vec3(0.2f, 0.3f, 0.8f));
-	Model M_LIGHT = Model("res/models/cube2.obj", glm::vec3(1.0f, 1.0f, 1.0f));
-	
+	Skybox sky = Skybox("skybox");
 	// bind them (initialization - association with VAOs)
 	M_FLOOR.bind();
-	M_LITCUBE.bind();
-	M_LIGHT.bind();
+	M_CUBE.bind();
 	
 	/* -----------------------------Transformations---------------------- */
-	glm::vec3 light_position = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::mat4 light_transform = glm::mat4(1.0f);
-
+	glm::vec3 cube_pos = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), cube_pos);
+	
 	/* --------------------------------------Shader declarations------------------------------ */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
-	Shader litshader = Shader("res/shaders/lit/lit_vert.shader", "res/shaders/lit/lit_frag.shader");
-	Shader lightsrcshader = Shader("res/shaders/lightSource/lightsrc_vert.shader", "res/shaders/lightSource/lightsrc_frag.shader");
+	Shader skybox_shader = Shader("res/shaders/skybox/sky_vert.shader", "res/shaders/skybox/sky_frag.shader");
 	// ==================================== Shader configurations ===================================
-
+	skybox_shader.bind();
+	skybox_shader.setInt("skybox", 0);
 	
 	// ============================================================
 	/* Game loop */
 	// ============================================================
 	while (!glfwWindowShouldClose(mainWindow)) {
 		// delta time setup
-		float curr = glfwGetTime();
+		float curr =(float) glfwGetTime();
 		delta = curr - last;
 		last = curr;
 
@@ -107,34 +105,12 @@ int main() {
 		/* INIT RENDERER */
 		Renderer::init(cam);
 		
-		/* DYNAMIC TRANSFORMATIOSN */
-		// light 1 transforms
-		light_position.x = sin(glfwGetTime()) * 3.0f;
-		light_position.z = cos(glfwGetTime()) * 3.0f;
-		light_position.y = 0.0f;
-
-		
-		light_transform = glm::mat4(1.0f);
-		light_transform = glm::translate(light_transform, light_position);
-		light_transform = glm::scale(light_transform, glm::vec3(0.2f));
-
-		litshader.bind();
-		litshader.setVec3("lightPos", light_position);
-
-		M_LIGHT.setColor(1.0f,1.0f,1.0f);
-		litshader.setVec3("objectColor", M_LITCUBE.getColor());
-		litshader.setVec3("lightColor", M_LIGHT.getColor());
-
-		lightsrcshader.bind();
-		lightsrcshader.setVec3("lightColor", M_LIGHT.getColor());
-
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::renderModel(lightsrcshader, M_LIGHT, light_transform);
+		Renderer::renderTexModel(shader, M_FLOOR);
+		Renderer::renderTexModel(shader, M_CUBE, cube_trans);
+		Renderer::renderSkybox(skybox_shader, sky); // render skybox last
 		
-		Renderer::renderModel(litshader, M_LITCUBE);
 		
-
-
 		/* Swap buffers */
 		glfwSwapBuffers(mainWindow);
 

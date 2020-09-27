@@ -57,6 +57,9 @@
     <ClCompile Include="src\Renderer_API\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer_API\Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -98,14 +101,15 @@
     <ClInclude Include="src\Renderer_API\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer_API\Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\vertexgen.shader" />
     <None Include="res\shaders\fragmentgen.shader" />
-    <None Include="res\shaders\lit\lit_vert.shader" />
-    <None Include="res\shaders\lit\lit_frag.shader" />
-    <None Include="res\shaders\lightSource\lightsrc_vert.shader" />
-    <None Include="res\shaders\lightSource\lightsrc_frag.shader" />
+    <None Include="res\shaders\skybox\sky_vert.shader" />
+    <None Include="res\shaders\skybox\sky_frag.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\logo.png">
@@ -115,6 +119,42 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\textures\brick.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\back.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\bottom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\top.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox2\back.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox2\bottom.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox2\front.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox2\left.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox2\right.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox2\top.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

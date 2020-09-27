@@ -11,7 +11,7 @@ Camera::Camera() {
 	Camera::viewMatrix = glm::mat4(1.0f);
 	Camera::projectionMatrix = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 	
-	Camera::camPos = glm::vec3(0.0f,0.0f,3.0f);
+	Camera::camPos = glm::vec3(0.0f,1.0f,5.0f);
 	Camera::camFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	Camera::camUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -38,6 +38,9 @@ glm::mat4& Camera::getVP() {
 	return Camera::viewprojectionMatrix;
 }
 
+/* Get view and projection seperately */
+glm::mat4& Camera::getView() {return Camera::viewMatrix; }
+glm::mat4& Camera::getProjection() { return Camera::projectionMatrix; }
 
 /* Return camera vars */
 glm::vec3& Camera::getCamFront() { return Camera::camFront; }

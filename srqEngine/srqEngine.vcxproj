@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer_API\Skybox.cpp" />
     <ClCompile Include="src\Renderer_API\Buffer.cpp" />
     <ClCompile Include="depend\glad.c" />
     <ClCompile Include="src\Camera.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\Renderer_API\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer_API\Skybox.h" />
     <ClInclude Include="src\Renderer_API\Buffer.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Components\Renderable.h" />
@@ -183,16 +185,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentgen.shader" />
-    <None Include="res\shaders\lightSource\lightsrc_frag.shader" />
-    <None Include="res\shaders\lightSource\lightsrc_vert.shader" />
-    <None Include="res\shaders\lit\lit_frag.shader" />
-    <None Include="res\shaders\lit\lit_vert.shader" />
+    <None Include="res\shaders\skybox\sky_frag.shader" />
+    <None Include="res\shaders\skybox\sky_vert.shader" />
     <None Include="res\shaders\vertexgen.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\brick.png" />
     <Image Include="res\textures\floor.png" />
     <Image Include="res\textures\logo.png" />
+    <Image Include="res\textures\skybox2\back.jpg" />
+    <Image Include="res\textures\skybox2\bottom.jpg" />
+    <Image Include="res\textures\skybox2\front.jpg" />
+    <Image Include="res\textures\skybox2\left.jpg" />
+    <Image Include="res\textures\skybox2\right.jpg" />
+    <Image Include="res\textures\skybox2\top.jpg" />
+    <Image Include="res\textures\skybox\back.png" />
+    <Image Include="res\textures\skybox\bottom.png" />
+    <Image Include="res\textures\skybox\front.png" />
+    <Image Include="res\textures\skybox\left.png" />
+    <Image Include="res\textures\skybox\right.png" />
+    <Image Include="res\textures\skybox\top.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

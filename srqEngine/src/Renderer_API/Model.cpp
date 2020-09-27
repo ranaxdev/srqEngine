@@ -30,8 +30,8 @@ void Model::update() {
 
 /* Init model (binding) to VA */
 void Model::bind() {
-	va = VertexArray();
-	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&(Model::data[0]), (unsigned int)(Model::data.size() * sizeof(unsigned int)));
+	Model::va = VertexArray();
+	std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>(&(Model::data[0]), (unsigned int)(Model::data.size() * sizeof(float)));
 	vb->setlayout(
 		{
 			{DataType::Float3, "a_pos"},
@@ -39,7 +39,7 @@ void Model::bind() {
 			{DataType::Float3, "a_norm"}
 		}
 	);
-	va.addVBO(vb);
+	Model::va.addVBO(vb);
 
 
 }

@@ -8,6 +8,9 @@
 extern const int MAX_ENTITIES;
 
 glm::mat4 Renderer::viewProjectionMatrix = glm::mat4(1.0f);
+glm::mat4 Renderer::viewMatrix = glm::mat4(1.0f);
+glm::mat4 Renderer::projectionMatrix = glm::mat4(1.0f);
+bool Renderer::calcedProj = false;
 
 Renderer::Renderer() {
 	
@@ -17,10 +20,18 @@ Renderer::~Renderer() {}
 /* Initialze renderer */
 void Renderer::init(Camera& cam) {
 	Renderer::viewProjectionMatrix = cam.getVP(); // recalulates automatically
+	// recalcs when cam.getVP() is called so no extra performance hit
+	Renderer::viewMatrix = cam.getView();
+	// only calc once as it doesn't change
+	if (!calcedProj) {
+		Renderer::projectionMatrix = cam.getProjection();
+		Renderer::calcedProj = true;
+	}
+	
 }
 
 /* Render textured model to screen */
-void Renderer::renderTexModel(Shader& shader, VertexArray& va, Model& model, glm::mat4 transform)
+void Renderer::renderTexModel(Shader& shader, Model& model, glm::mat4 transform)
 {
 	model.update(); // update model (just binds texture for now)
 	// bind shader and set uniform
@@ -28,7 +39,7 @@ void Renderer::renderTexModel(Shader& shader, VertexArray& va, Model& model, glm
 	shader.setMat4("u_VP", Renderer::viewProjectionMatrix); // view projection matrix
 	shader.setMat4("u_M", transform); // model matrix
 
-	va.bind();
+	model.getVA().bind();
 	glDrawArrays(GL_TRIANGLES, 0, model.getTotalVectors());
 	
 }
@@ -41,8 +52,10 @@ void Renderer::renderModel(Shader& shader, Model& model, glm::mat4 transform) {
 	shader.setMat4("u_M", transform);
 
 	// bind configured uniforms
-	for (auto& c : shader.getConfig()) {
-		c();
+	if (shader.getConfig().size() > 0) {
+		for (auto& c : shader.getConfig()) {
+			c();
+		}
 	}
 
 	model.getVA().bind();
@@ -60,11 +73,37 @@ void Renderer::renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform)
 	shader.setMat4("u_M", transform);
 	
 	// Run all other shader configurations
-	for (auto& c : shader.getConfig()) {
-		c();
+	if (shader.getConfig().size() > 0) {
+		for (auto& c : shader.getConfig()) {
+			c();
+		}
 	}
 
 	va.bind();
 	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+
+void Renderer::renderSkybox(Shader& shader, Skybox& sky)
+{
+	glDepthFunc(GL_LEQUAL);
+	// bind cubemap
+	sky.bind();
+	
+	// bind shader
+	shader.bind();
+	
+
+	// Cam configs
+	
+	glm::mat4 view = glm::mat4(glm::mat3(Renderer::viewMatrix));
+	shader.setMat4("u_V", view);
+	shader.setMat4("u_P", Renderer::projectionMatrix);
+	
+
+	// draw
+	sky.getVA().bind();
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDepthFunc(GL_LESS);
 }
 

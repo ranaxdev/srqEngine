@@ -1,13 +1,2 @@
-﻿  Entry.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(100,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(112,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Entry.cpp(113,41): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
+﻿  Renderer.cpp
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe
