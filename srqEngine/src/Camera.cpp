@@ -1,5 +1,7 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
+#include<glm/gtx/string_cast.hpp>
+#include<iostream>
 #include "Camera.h"
 #include "Util/Globals.h"
 
@@ -70,6 +72,16 @@ void Camera::update(GLFWwindow* window, float delta) {
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // move right
 		Camera::camPos += glm::normalize(glm::cross(Camera::camFront, Camera::camUp)) * camSpeed;
 	}
+	// temp exit
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwTerminate();
+	}
+
+	/* TEMP COLLISION DETECTION FOR DEBUGGING */
+	// ===================================================================================================
+	
+	
+
 
 	/* UPDATE ROTATION */
 	// ===================================================================================================

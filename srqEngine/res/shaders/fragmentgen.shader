@@ -6,7 +6,8 @@ in vec2 tc; //input tex coord from vertex shader
 
 uniform sampler2D thetex;
 
+
 void main() {
 
-	FragColor = texture(thetex, tc);
+	FragColor = texture(thetex, tc) * vertexColor;
 }

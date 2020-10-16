@@ -8,6 +8,7 @@
 // ******** IMPORTED MODEL **************
 // textured model
 Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath), totalVertices(0) {
+	Model::position = glm::vec3(0.0f);
 	// construct data with model importer
 	Model::constructData(filepath);
 	// bind texture
@@ -18,6 +19,7 @@ Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath)
 Model::Model(const char* filepath, glm::vec3 color) :tex("res/textures/logo.png"), totalVertices(0) {
 	Model::constructData(filepath);
 	Model::modelColor = color;
+	Model::position = glm::vec3(0.0f);
 }
 
 /* Free memory */
@@ -88,6 +90,7 @@ std::vector<glm::vec2>& Model::getTextureCoords() { return Model::textureCoords;
 std::vector<glm::vec3>& Model::getNormalCoords() { return Model::normalCoords; }
 VertexArray& Model::getVA() { return Model::va;  } // Vertex array this model is bound to
 glm::vec3 Model::getColor() { return Model::modelColor; }
+glm::vec3& Model::getPosition() { return Model::position; }
 
 // =========================================================================
 // =========================================================================

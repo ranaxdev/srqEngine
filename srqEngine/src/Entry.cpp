@@ -7,6 +7,7 @@
 
 #include<iostream>
 #include <functional>
+#include<algorithm>
 
 #include "Util/Globals.h"
 
@@ -35,7 +36,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 /* Camera */
 Camera cam = Camera();
-
+float calcsign(float x) {
+	return (x > 0) - (x < 0);
+}
 /* Entry point */
 int main() {
 	glfwInit();
@@ -44,7 +47,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Main window */
-	GLFWwindow* mainWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "srqEngine",NULL, NULL);
+	GLFWwindow* mainWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "srqEngine", NULL, NULL);
 	if (mainWindow == NULL) {
 		std::cout << "[ERROR] Failed to create window!" << std::endl;
 		glfwTerminate();
@@ -53,7 +56,7 @@ int main() {
 	glfwMakeContextCurrent(mainWindow); // make it the current context
 	/* TEMPORARY: SET GLFW CALLBACKS */
 	glfwSetFramebufferSizeCallback(mainWindow, framebuffer_size_callback);
-	
+
 	/* Config GLFW Options */
 	glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -78,10 +81,12 @@ int main() {
 	// bind them (initialization - association with VAOs)
 	M_FLOOR.bind();
 	M_CUBE.bind();
-	
+
 	/* -----------------------------Transformations---------------------- */
-	glm::vec3 cube_pos = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), cube_pos);
+	//M_CUBE.getPosition().x += 5.0f;
+	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), M_CUBE.getPosition());
+	M_FLOOR.getPosition().y -= 1.0f;
+	glm::mat4 floor_trans = glm::translate(glm::mat4(1.0f), M_FLOOR.getPosition());
 	
 	/* --------------------------------------Shader declarations------------------------------ */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
@@ -89,26 +94,56 @@ int main() {
 	// ==================================== Shader configurations ===================================
 	skybox_shader.bind();
 	skybox_shader.setInt("skybox", 0);
+
+
 	
 	// ============================================================
 	/* Game loop */
 	// ============================================================
 	while (!glfwWindowShouldClose(mainWindow)) {
 		// delta time setup
-		float curr =(float) glfwGetTime();
+		float curr = (float)glfwGetTime();
 		delta = curr - last;
 		last = curr;
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		
 		/* INIT RENDERER */
 		Renderer::init(cam);
 		
+		if ((cam.getCamPos().x >= M_CUBE.getPosition().x-1.5 && cam.getCamPos().x <= M_CUBE.getPosition().x + 1.5) &&
+			(cam.getCamPos().y >= M_CUBE.getPosition().y-1.5 && cam.getCamPos().y <= M_CUBE.getPosition().y + 1.5) &&
+			(cam.getCamPos().z >= M_CUBE.getPosition().z-1.5 && cam.getCamPos().z <= M_CUBE.getPosition().z + 1.5)) {
+			float dx = -abs(cam.getCamPos()).x + (M_CUBE.getPosition().x+1.5);
+			float dy = -abs(cam.getCamPos()).y + (M_CUBE.getPosition().y+1.5);
+			float dz = -abs(cam.getCamPos()).z + (M_CUBE.getPosition().z+1.5);
+			float min = std::min({ dx,dy,dz });
+			
+			//std::cout << "X: " << dx << " / Y: " << dy << " / Z: " << dz << std::endl;
+			if (min == dx) {
+				float sign = calcsign(cam.getCamFront().x);
+				cam.setCamPos(glm::vec3(cam.getCamPos().x -(sign * 0.01), cam.getCamPos().y, cam.getCamPos().z));
+			}
+
+			if (min == dy) {
+				float sign = calcsign(cam.getCamFront().y);
+				cam.setCamPos(glm::vec3(cam.getCamPos().x, cam.getCamPos().y -(sign* 0.01), cam.getCamPos().z));
+			}
+
+			if (min == dz) {
+				float sign = calcsign(cam.getCamFront().z);
+				cam.setCamPos(glm::vec3(cam.getCamPos().x, cam.getCamPos().y, cam.getCamPos().z - (sign * 0.01)));
+			}
+			
+
+		}
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
-		Renderer::renderTexModel(shader, M_FLOOR);
+		Renderer::renderTexModel(shader, M_FLOOR, floor_trans);
 		Renderer::renderTexModel(shader, M_CUBE, cube_trans);
+		
 		Renderer::renderSkybox(skybox_shader, sky); // render skybox last
+		
 		
 		
 		/* Swap buffers */

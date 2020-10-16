@@ -26,6 +26,8 @@ public:
 	VertexArray& getVA();
 	
 	glm::vec3 getColor();
+	glm::vec3& getPosition();
+
 	void setColor(float a, float b, float c);
 
 	void update();
@@ -38,6 +40,7 @@ private:
 	std::vector<glm::vec3> normalCoords;
 
 	glm::vec3 modelColor;
+	glm::vec3 position;
 
 	VertexArray va;
 	Texture tex;
