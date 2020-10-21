@@ -1,5 +1,6 @@
 #include "Model.h"
 #include "../Util/Globals.h"
+#include "../Collision/Collision.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -7,10 +8,17 @@
 
 // ******** IMPORTED MODEL **************
 // textured model
-Model::Model(const char* filepath, const char* tex_filepath) : tex(tex_filepath), totalVertices(0) {
-	Model::position = glm::vec3(0.0f);
+Model::Model(const char* filepath, const char* tex_filepath, glm::vec3 size, bool collidable, glm::vec3 pos) 
+	: tex(tex_filepath), totalVertices(0), size(size), collidable(collidable), position(pos) {
 	// construct data with model importer
 	Model::constructData(filepath);
+	
+	// add to collidables
+	if (collidable) {
+		std::shared_ptr<Model> m = std::shared_ptr<Model>(this);
+		Collision::collidables.push_back(m);
+	}
+
 	// bind texture
 	Model::tex.bind();
 }
@@ -91,7 +99,7 @@ std::vector<glm::vec3>& Model::getNormalCoords() { return Model::normalCoords; }
 VertexArray& Model::getVA() { return Model::va;  } // Vertex array this model is bound to
 glm::vec3 Model::getColor() { return Model::modelColor; }
 glm::vec3& Model::getPosition() { return Model::position; }
-
+glm::vec3& Model::getSize() { return Model::size; }
 // =========================================================================
 // =========================================================================
 

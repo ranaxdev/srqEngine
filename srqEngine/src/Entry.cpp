@@ -10,6 +10,7 @@
 #include<algorithm>
 
 #include "Util/Globals.h"
+#include "Collision/Collision.h"
 
 #include "Renderer.h"
 #include "Renderer_API/Shader.h"
@@ -36,9 +37,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 /* Camera */
 Camera cam = Camera();
-float calcsign(float x) {
-	return (x > 0) - (x < 0);
-}
+
 /* Entry point */
 int main() {
 	glfwInit();
@@ -74,8 +73,9 @@ int main() {
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	// ~t e x t u r e d~
-	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png"); // uses floor texture
-	Model M_CUBE = Model("res/models/cube2.obj", "res/textures/brick.png");
+	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png", glm::vec3(30.0f, 30.0f, 1.0f), false); // uses floor texture
+	Model M_CUBE = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f,1.0f), true);
+	
 	// ~p l a i n~
 	Skybox sky = Skybox("skybox");
 	// bind them (initialization - association with VAOs)
@@ -83,7 +83,7 @@ int main() {
 	M_CUBE.bind();
 
 	/* -----------------------------Transformations---------------------- */
-	//M_CUBE.getPosition().x += 5.0f;
+	M_CUBE.getPosition().x += 5.0f;
 	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), M_CUBE.getPosition());
 	M_FLOOR.getPosition().y -= 1.0f;
 	glm::mat4 floor_trans = glm::translate(glm::mat4(1.0f), M_FLOOR.getPosition());
@@ -111,33 +111,11 @@ int main() {
 		
 		/* INIT RENDERER */
 		Renderer::init(cam);
+		/* UPDATES */
+		cam.update(mainWindow, delta);
+		Collision::updateCollisions(cam);
 		
-		if ((cam.getCamPos().x >= M_CUBE.getPosition().x-1.5 && cam.getCamPos().x <= M_CUBE.getPosition().x + 1.5) &&
-			(cam.getCamPos().y >= M_CUBE.getPosition().y-1.5 && cam.getCamPos().y <= M_CUBE.getPosition().y + 1.5) &&
-			(cam.getCamPos().z >= M_CUBE.getPosition().z-1.5 && cam.getCamPos().z <= M_CUBE.getPosition().z + 1.5)) {
-			float dx = -abs(cam.getCamPos()).x + (M_CUBE.getPosition().x+1.5);
-			float dy = -abs(cam.getCamPos()).y + (M_CUBE.getPosition().y+1.5);
-			float dz = -abs(cam.getCamPos()).z + (M_CUBE.getPosition().z+1.5);
-			float min = std::min({ dx,dy,dz });
-			
-			//std::cout << "X: " << dx << " / Y: " << dy << " / Z: " << dz << std::endl;
-			if (min == dx) {
-				float sign = calcsign(cam.getCamFront().x);
-				cam.setCamPos(glm::vec3(cam.getCamPos().x -(sign * 0.01), cam.getCamPos().y, cam.getCamPos().z));
-			}
-
-			if (min == dy) {
-				float sign = calcsign(cam.getCamFront().y);
-				cam.setCamPos(glm::vec3(cam.getCamPos().x, cam.getCamPos().y -(sign* 0.01), cam.getCamPos().z));
-			}
-
-			if (min == dz) {
-				float sign = calcsign(cam.getCamFront().z);
-				cam.setCamPos(glm::vec3(cam.getCamPos().x, cam.getCamPos().y, cam.getCamPos().z - (sign * 0.01)));
-			}
-			
-
-		}
+		
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
 		Renderer::renderTexModel(shader, M_FLOOR, floor_trans);
 		Renderer::renderTexModel(shader, M_CUBE, cube_trans);
@@ -151,7 +129,7 @@ int main() {
 
 		// PROCESS INPUT (TEMP)
 		glfwPollEvents();
-		cam.update(mainWindow, delta);
+		
 		
 	}
 
