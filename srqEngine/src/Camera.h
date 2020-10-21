@@ -34,6 +34,7 @@ private:
 	float pitch;
 	float lastX;
 	float lastY;
+	float movespeed;
 	
 	bool initmouse;
 

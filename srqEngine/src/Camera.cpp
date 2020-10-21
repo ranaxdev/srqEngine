@@ -20,6 +20,7 @@ Camera::Camera() {
 	Camera::lastX = (float)SCREEN_WIDTH / 2.0f;
 	Camera::lastY = (float)SCREEN_HEIGHT / 2.0f;
 	Camera::initmouse = true;
+	Camera::movespeed = 8.0f;
 }
 
 Camera::~Camera() {}
@@ -57,28 +58,25 @@ void Camera::setCamPos(glm::vec3 cp) { Camera::camPos = cp; }
 void Camera::update(GLFWwindow* window, float delta) {
 	/* UPDATE MOVEMENT*/
 	// ===================================================================================================
-	float camSpeed = 8.0f * delta;
+	float velocity = Camera::movespeed * delta;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
-		Camera::camPos += camSpeed * Camera::camFront;
+		Camera::camPos += velocity * Camera::camFront;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // move back
-		Camera::camPos -= camSpeed * Camera::camFront;
+		Camera::camPos -= velocity * Camera::camFront;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { // move left
-		Camera::camPos -= glm::normalize(glm::cross(Camera::camFront, Camera::camUp)) * camSpeed;
+		Camera::camPos -= glm::normalize(glm::cross(Camera::camFront, Camera::camUp)) * velocity;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // move right
-		Camera::camPos += glm::normalize(glm::cross(Camera::camFront, Camera::camUp)) * camSpeed;
+		Camera::camPos += glm::normalize(glm::cross(Camera::camFront, Camera::camUp)) * velocity;
 	}
+	camPos.y = 0.0f;
+
 	// temp exit
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwTerminate();
 	}
-
-	/* TEMP COLLISION DETECTION FOR DEBUGGING */
-	// ===================================================================================================
-	
-	
 
 
 	/* UPDATE ROTATION */
