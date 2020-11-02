@@ -73,20 +73,23 @@ int main() {
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	// ~t e x t u r e d~
-	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png", glm::vec3(30.0f, 30.0f, 1.0f), false); // uses floor texture
+	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png", glm::vec3(30.0f, 30.0f, 1.0f), false);
 	Model M_CUBE = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f,1.0f), true);
-	
+	Model M_CUBE2 = Model("res/models/cube2.obj", "res/textures/logo.png", glm::vec3(1.0f, 1.0f, 1.0f), true);
 	// ~p l a i n~
 	Skybox sky = Skybox("skybox");
 	// bind them (initialization - association with VAOs)
 	M_FLOOR.bind();
 	M_CUBE.bind();
-
+	M_CUBE2.bind();
 	/* -----------------------------Transformations---------------------- */
-	//M_CUBE.getPosition().z -= 10;
+	M_CUBE.getPosition().z -= 10;
 	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), M_CUBE.getPosition());
 	M_FLOOR.getPosition().y -= 1.0f;
 	glm::mat4 floor_trans = glm::translate(glm::mat4(1.0f), M_FLOOR.getPosition());
+	M_CUBE2.getPosition().x += 5.0f;
+	M_CUBE2.getPosition().z += 12.0f;
+	glm::mat4 cube2_trans = glm::translate(glm::mat4(1.0f), M_CUBE2.getPosition());
 	
 	/* --------------------------------------Shader declarations------------------------------ */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
@@ -119,7 +122,8 @@ int main() {
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
 		Renderer::renderTexModel(shader, M_FLOOR, floor_trans);
 		Renderer::renderTexModel(shader, M_CUBE, cube_trans);
-		
+		Renderer::renderTexModel(shader, M_CUBE2, cube2_trans);
+
 		Renderer::renderSkybox(skybox_shader, sky); // render skybox last
 		
 		

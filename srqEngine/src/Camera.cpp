@@ -66,7 +66,9 @@ void Camera::update(GLFWwindow* window, float delta) {
 	float jump_velocity = Camera::jumpspeed * delta;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
 		Camera::camPos += velocity * Camera::camFront;
+		
 	}
+	
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // move back
 		Camera::camPos -= velocity * Camera::camFront;
 	}
@@ -80,6 +82,7 @@ void Camera::update(GLFWwindow* window, float delta) {
 		Camera::jumping = true;
 		Camera::falling = false;
 	}
+	
 	// jumping mechanism
 	if (Camera::jumping) {
 		// initial jump
