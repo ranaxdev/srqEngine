@@ -35,8 +35,11 @@ private:
 	float lastX;
 	float lastY;
 	float movespeed;
-	
+	float jumpspeed;
+
 	bool initmouse;
+	bool jumping;
+	bool falling;
 
 	void recalcVP();
 	

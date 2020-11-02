@@ -1,8 +1,2 @@
-﻿  Camera.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(89,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(90,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(93,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(94,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(95,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(96,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  Entry.cpp
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

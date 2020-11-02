@@ -20,7 +20,11 @@ Camera::Camera() {
 	Camera::lastX = (float)SCREEN_WIDTH / 2.0f;
 	Camera::lastY = (float)SCREEN_HEIGHT / 2.0f;
 	Camera::initmouse = true;
+	Camera::jumping = false;
+	Camera::falling = true;
 	Camera::movespeed = 8.0f;
+	Camera::jumpspeed = 6.0f;
+	
 }
 
 Camera::~Camera() {}
@@ -59,6 +63,7 @@ void Camera::update(GLFWwindow* window, float delta) {
 	/* UPDATE MOVEMENT*/
 	// ===================================================================================================
 	float velocity = Camera::movespeed * delta;
+	float jump_velocity = Camera::jumpspeed * delta;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
 		Camera::camPos += velocity * Camera::camFront;
 	}
@@ -71,8 +76,32 @@ void Camera::update(GLFWwindow* window, float delta) {
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // move right
 		Camera::camPos += glm::normalize(glm::cross(Camera::camFront, Camera::camUp)) * velocity;
 	}
-	camPos.y = 0.0f;
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !Camera::jumping) {
+		Camera::jumping = true;
+		Camera::falling = false;
+	}
+	// jumping mechanism
+	if (Camera::jumping) {
+		// initial jump
+		if (Camera::camPos.y < 2.0f && !Camera::falling) {
+			Camera::camPos.y += jump_velocity*2.0f;
+		}
+		else if(Camera::camPos.y >= 2.0f) {
+			Camera::falling = true;
+		}
+		// falling after max height reached
+		if (Camera::falling && Camera::camPos.y > 0.0f) {
+			Camera::camPos.y -= jump_velocity;
+		}
+		else if (Camera::camPos.y <= 0.0f) {
+			Camera::falling = true;
+			Camera::jumping = false;
+		}
 
+	}
+	else {
+		Camera::camPos.y = 0.0f;
+	}
 	// temp exit
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwTerminate();

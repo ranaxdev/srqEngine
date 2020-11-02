@@ -83,7 +83,7 @@ int main() {
 	M_CUBE.bind();
 
 	/* -----------------------------Transformations---------------------- */
-	//M_CUBE.getPosition().x += 1;
+	//M_CUBE.getPosition().z -= 10;
 	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), M_CUBE.getPosition());
 	M_FLOOR.getPosition().y -= 1.0f;
 	glm::mat4 floor_trans = glm::translate(glm::mat4(1.0f), M_FLOOR.getPosition());

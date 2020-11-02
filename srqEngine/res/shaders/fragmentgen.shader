@@ -9,5 +9,5 @@ uniform sampler2D thetex;
 
 void main() {
 
-	FragColor = texture(thetex, tc) * vertexColor;
+	FragColor = texture(thetex, tc);
 }
