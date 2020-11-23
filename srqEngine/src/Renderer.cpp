@@ -51,6 +51,7 @@ void Renderer::renderModel(Shader& shader, Model& model, glm::mat4 transform) {
 	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
 	shader.setMat4("u_M", transform);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	// bind configured uniforms
 	if (shader.getConfig().size() > 0) {
 		for (auto& c : shader.getConfig()) {

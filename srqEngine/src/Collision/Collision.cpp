@@ -10,7 +10,6 @@ float Collision::calcsign(float x) {
 }
 
 void Collision::updateCollisions(Camera& cam) {
-	std::cout << glm::to_string(cam.getCamPos()) << std::endl;
 	for (auto& m : collidables) {
 		if ((cam.getCamPos().x >= m->getPosition().x - (m->getSize().x + 0.5) && cam.getCamPos().x <= m->getPosition().x + (m->getSize().x + 0.5)) &&
 			(cam.getCamPos().y >= m->getPosition().y - (m->getSize().y + 0.5) && cam.getCamPos().y <= m->getPosition().y + (m->getSize().y + 0.5)) &&

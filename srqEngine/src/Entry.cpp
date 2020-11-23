@@ -74,31 +74,57 @@ int main() {
 	// ==========================================================================================
 	// ~t e x t u r e d~
 	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png", glm::vec3(30.0f, 30.0f, 1.0f), false);
-	Model M_CUBE = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f,1.0f), true);
-	Model M_CUBE2 = Model("res/models/cube2.obj", "res/textures/logo.png", glm::vec3(1.0f, 1.0f, 1.0f), true);
+	Model M_CUBE = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f, 1.0f), true); /* Set Color: */ M_CUBE.setColor(0.1f, 0.8f, 0.3f);
+	Model M_LIGHT = Model("res/models/light.obj", "res/textures/brick.png", glm::vec3(0.5f, 0.5f, 0.5f), false); /* Set Color: */ M_LIGHT.setColor(1.0f, 1.0f, 1.0f);
+	Model M_CUBE2 = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f, 1.0f), true);
+	Model M_TERRAIN = Model("res/models/terrain.obj", "res/textures/logo.png", glm::vec3(30.0f, 30.0f, 1.0f), false); /* Set Color: */ M_TERRAIN.setColor(0.1f, 0.8f, 0.3f);
 	// ~p l a i n~
 	Skybox sky = Skybox("skybox");
 	// bind them (initialization - association with VAOs)
 	M_FLOOR.bind();
 	M_CUBE.bind();
 	M_CUBE2.bind();
+	M_LIGHT.bind();
+	M_TERRAIN.bind();
 	/* -----------------------------Transformations---------------------- */
-	M_CUBE.getPosition().z -= 10;
-	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), M_CUBE.getPosition());
+	//M_CUBE.getPosition().z -= 10;
+	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), M_CUBE.getPosition()); /* Cube 1 model */
+
+
+	M_LIGHT.getPosition().x += 5.0f;
+	M_LIGHT.getPosition().z += 2.0f;
+	glm::mat4 light_trans = glm::translate(glm::mat4(1.0f), M_LIGHT.getPosition()); /* Light source model */
+
 	M_FLOOR.getPosition().y -= 1.0f;
-	glm::mat4 floor_trans = glm::translate(glm::mat4(1.0f), M_FLOOR.getPosition());
+	glm::mat4 floor_trans = glm::translate(glm::mat4(1.0f), M_FLOOR.getPosition()); /* Floor model */
+
+
 	M_CUBE2.getPosition().x += 5.0f;
 	M_CUBE2.getPosition().z += 12.0f;
-	glm::mat4 cube2_trans = glm::translate(glm::mat4(1.0f), M_CUBE2.getPosition());
-	
+	glm::mat4 cube2_trans = glm::translate(glm::mat4(1.0f), M_CUBE2.getPosition()); /* Cube 2 model */
+
+
+	M_TERRAIN.getPosition().y -= 2.0f;
+	glm::mat4 terrain_trans = glm::translate(glm::mat4(1.0f), M_TERRAIN.getPosition()); /* Terrain model */
+
 	/* --------------------------------------Shader declarations------------------------------ */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
 	Shader skybox_shader = Shader("res/shaders/skybox/sky_vert.shader", "res/shaders/skybox/sky_frag.shader");
+	Shader lit_shader = Shader("res/shaders/lit/lit_vert.shader", "res/shaders/lit/lit_frag.shader");
+	Shader light_shader = Shader("res/shaders/light/light_vert.shader", "res/shaders/light/light_frag.shader");
 	// ==================================== Shader configurations ===================================
+	shader.bind();
+	shader.setVec3("light_color", M_LIGHT.getColor());
+	shader.setVec3("light_pos", M_LIGHT.getPosition());
+
 	skybox_shader.bind();
 	skybox_shader.setInt("skybox", 0);
 
-
+	lit_shader.bind();
+	lit_shader.setVec3("obj_color", M_CUBE.getColor());
+	lit_shader.setVec3("light_color", M_LIGHT.getColor());
+	lit_shader.setVec3("light_pos", M_LIGHT.getPosition());
+	lit_shader.setVec3("view_pos", cam.getCamPos());
 	
 	// ============================================================
 	/* Game loop */
@@ -119,11 +145,29 @@ int main() {
 		Collision::updateCollisions(cam);
 		
 		
+		// set light pos
+		if (glfwGetKey(mainWindow, GLFW_KEY_E) == GLFW_PRESS) {			
+			M_LIGHT.getPosition() = cam.getCamPos(); // Set light position to current camera position
+			light_trans = glm::translate(glm::mat4(1.0f), M_LIGHT.getPosition());
+
+			// update light position uniform in shaders
+			lit_shader.bind();
+			lit_shader.setVec3("light_pos", M_LIGHT.getPosition()); 
+
+			shader.bind();
+			shader.setVec3("light_pos", M_LIGHT.getPosition()); // update light position uniform
+		}
+		lit_shader.bind();
+		lit_shader.setVec3("view_pos", cam.getCamPos());
+		
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
 		Renderer::renderTexModel(shader, M_FLOOR, floor_trans);
-		Renderer::renderTexModel(shader, M_CUBE, cube_trans);
+		//Renderer::renderTexModel(shader, M_CUBE, cube_trans);
+		Renderer::renderModel(lit_shader, M_CUBE, cube_trans);
+		Renderer::renderModel(light_shader, M_LIGHT, light_trans);
 		Renderer::renderTexModel(shader, M_CUBE2, cube2_trans);
-
+		Renderer::renderModel(lit_shader, M_TERRAIN, terrain_trans);
+		
 		Renderer::renderSkybox(skybox_shader, sky); // render skybox last
 		
 		

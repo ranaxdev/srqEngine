@@ -23,8 +23,9 @@ Camera::Camera() {
 	Camera::jumping = false;
 	Camera::falling = true;
 	Camera::movespeed = 8.0f;
-	Camera::jumpspeed = 6.0f;
-	
+	Camera::jumpvel = 0.0f;
+	Camera::gravity = 15.0f;
+
 }
 
 Camera::~Camera() {}
@@ -56,19 +57,16 @@ glm::vec3& Camera::getCamUp() { return Camera::camUp; }
 void Camera::setCamFront(glm::vec3 cf) { Camera::camFront = cf; }
 void Camera::setCamPos(glm::vec3 cp) { Camera::camPos = cp; }
 
-
-
 /* Update input */
 void Camera::update(GLFWwindow* window, float delta) {
 	/* UPDATE MOVEMENT*/
 	// ===================================================================================================
 	float velocity = Camera::movespeed * delta;
-	float jump_velocity = Camera::jumpspeed * delta;
+	
+	Camera::jumping = (jumpvel > 0.0f || Camera::camPos.y > 0.0f);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // move forward
 		Camera::camPos += velocity * Camera::camFront;
-		
 	}
-	
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // move back
 		Camera::camPos -= velocity * Camera::camFront;
 	}
@@ -79,32 +77,23 @@ void Camera::update(GLFWwindow* window, float delta) {
 		Camera::camPos += glm::normalize(glm::cross(Camera::camFront, Camera::camUp)) * velocity;
 	}
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !Camera::jumping) {
+		Camera::jumpvel = 8.0f;
 		Camera::jumping = true;
-		Camera::falling = false;
+		
 	}
 	
 	// jumping mechanism
 	if (Camera::jumping) {
-		// initial jump
-		if (Camera::camPos.y < 2.0f && !Camera::falling) {
-			Camera::camPos.y += jump_velocity*2.0f;
-		}
-		else if(Camera::camPos.y >= 2.0f) {
-			Camera::falling = true;
-		}
-		// falling after max height reached
-		if (Camera::falling && Camera::camPos.y > 0.0f) {
-			Camera::camPos.y -= jump_velocity;
-		}
-		else if (Camera::camPos.y <= 0.0f) {
-			Camera::falling = true;
-			Camera::jumping = false;
-		}
+		float deltaspeed = -gravity * delta;
+		Camera::jumpvel += deltaspeed;
+		Camera::camPos.y += (jumpvel) * delta;
 
 	}
-	else {
+	else{
+		Camera::jumpvel = 0.0f;
 		Camera::camPos.y = 0.0f;
 	}
+
 	// temp exit
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwTerminate();

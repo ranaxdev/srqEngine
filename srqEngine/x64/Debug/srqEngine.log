@@ -1,15 +1,2 @@
-﻿  Camera.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(121,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(122,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(125,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(126,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(127,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Camera.cpp(128,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Collision.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Collision\Collision.cpp(9,17): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  Entry.cpp
-  Renderer.cpp
-  Model.cpp
-C:\Dev\srqEngine\srqEngine\srqEngine\src\Renderer_API\Model.cpp(180,84): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
+﻿  Entry.cpp
   srqEngine.vcxproj -> C:\Dev\srqEngine\srqEngine\x64\Debug\srqEngine.exe

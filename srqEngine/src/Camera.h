@@ -35,7 +35,8 @@ private:
 	float lastX;
 	float lastY;
 	float movespeed;
-	float jumpspeed;
+	float jumpvel;
+	float gravity;
 
 	bool initmouse;
 	bool jumping;

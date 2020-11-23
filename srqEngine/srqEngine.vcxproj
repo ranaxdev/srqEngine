@@ -187,6 +187,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentgen.shader" />
+    <None Include="res\shaders\light\light_frag.shader" />
+    <None Include="res\shaders\light\light_vert.shader" />
+    <None Include="res\shaders\lit\lit_frag.shader" />
+    <None Include="res\shaders\lit\lit_vert.shader" />
     <None Include="res\shaders\skybox\sky_frag.shader" />
     <None Include="res\shaders\skybox\sky_vert.shader" />
     <None Include="res\shaders\vertexgen.shader" />

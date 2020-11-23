@@ -116,6 +116,10 @@
     <None Include="res\shaders\fragmentgen.shader" />
     <None Include="res\shaders\skybox\sky_vert.shader" />
     <None Include="res\shaders\skybox\sky_frag.shader" />
+    <None Include="res\shaders\lit\lit_vert.shader" />
+    <None Include="res\shaders\lit\lit_frag.shader" />
+    <None Include="res\shaders\light\light_vert.shader" />
+    <None Include="res\shaders\light\light_frag.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\logo.png">
