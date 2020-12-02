@@ -75,9 +75,8 @@ int main() {
 	// ~t e x t u r e d~
 	Model M_FLOOR = Model("res/models/floor.obj", "res/textures/floor.png", glm::vec3(30.0f, 30.0f, 1.0f), false);
 	Model M_CUBE = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f, 1.0f), true); /* Set Color: */ M_CUBE.setColor(0.1f, 0.8f, 0.3f);
-	Model M_LIGHT = Model("res/models/light.obj", "res/textures/brick.png", glm::vec3(0.5f, 0.5f, 0.5f), false); /* Set Color: */ M_LIGHT.setColor(1.0f, 1.0f, 1.0f);
+	Model M_LIGHT = Model("res/models/light.obj", "res/textures/brick.png", glm::vec3(0.5f, 0.5f, 0.5f), false); /* Set Color: */ M_LIGHT.setColor(0.6f, 1.0f, 1.0f);
 	Model M_CUBE2 = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f, 1.0f), true);
-	Model M_TERRAIN = Model("res/models/terrain.obj", "res/textures/logo.png", glm::vec3(30.0f, 30.0f, 1.0f), false); /* Set Color: */ M_TERRAIN.setColor(0.1f, 0.8f, 0.3f);
 	// ~p l a i n~
 	Skybox sky = Skybox("skybox");
 	// bind them (initialization - association with VAOs)
@@ -85,7 +84,7 @@ int main() {
 	M_CUBE.bind();
 	M_CUBE2.bind();
 	M_LIGHT.bind();
-	M_TERRAIN.bind();
+	
 	/* -----------------------------Transformations---------------------- */
 	//M_CUBE.getPosition().z -= 10;
 	glm::mat4 cube_trans = glm::translate(glm::mat4(1.0f), M_CUBE.getPosition()); /* Cube 1 model */
@@ -103,9 +102,6 @@ int main() {
 	M_CUBE2.getPosition().z += 12.0f;
 	glm::mat4 cube2_trans = glm::translate(glm::mat4(1.0f), M_CUBE2.getPosition()); /* Cube 2 model */
 
-
-	M_TERRAIN.getPosition().y -= 2.0f;
-	glm::mat4 terrain_trans = glm::translate(glm::mat4(1.0f), M_TERRAIN.getPosition()); /* Terrain model */
 
 	/* --------------------------------------Shader declarations------------------------------ */
 	Shader shader = Shader("res/shaders/vertexgen.shader", "res/shaders/fragmentgen.shader");
@@ -166,7 +162,6 @@ int main() {
 		Renderer::renderModel(lit_shader, M_CUBE, cube_trans);
 		Renderer::renderModel(light_shader, M_LIGHT, light_trans);
 		Renderer::renderTexModel(shader, M_CUBE2, cube2_trans);
-		Renderer::renderModel(lit_shader, M_TERRAIN, terrain_trans);
 		
 		Renderer::renderSkybox(skybox_shader, sky); // render skybox last
 		
