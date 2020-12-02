@@ -19,6 +19,7 @@
 #include "Renderer_API/VertexArray.h"
 #include "Renderer_API/Model.h"
 #include "Renderer_API/Skybox.h"
+#include "Renderer_API/ParticleGen.h"
 
 #include "Camera.h"
 
@@ -66,10 +67,12 @@ int main() {
 
 	/* Config OpenGL options */
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_CCW);
+
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_CCW);
 	//									LOAD MODELS     										//
 	// ==========================================================================================
 	// ~t e x t u r e d~
@@ -79,6 +82,7 @@ int main() {
 	Model M_CUBE2 = Model("res/models/cube2.obj", "res/textures/brick.png", glm::vec3(1.0f, 1.0f, 1.0f), true);
 	// ~p l a i n~
 	Skybox sky = Skybox("skybox");
+	ParticleGen particleGen = ParticleGen();
 	// bind them (initialization - association with VAOs)
 	M_FLOOR.bind();
 	M_CUBE.bind();
@@ -108,6 +112,7 @@ int main() {
 	Shader skybox_shader = Shader("res/shaders/skybox/sky_vert.shader", "res/shaders/skybox/sky_frag.shader");
 	Shader lit_shader = Shader("res/shaders/lit/lit_vert.shader", "res/shaders/lit/lit_frag.shader");
 	Shader light_shader = Shader("res/shaders/light/light_vert.shader", "res/shaders/light/light_frag.shader");
+	Shader particle_shader = Shader("res/shaders/particle/particle_vert.shader", "res/shaders/particle/particle_frag.shader");
 	// ==================================== Shader configurations ===================================
 	shader.bind();
 	shader.setVec3("light_color", M_LIGHT.getColor());
@@ -155,14 +160,15 @@ int main() {
 		}
 		lit_shader.bind();
 		lit_shader.setVec3("view_pos", cam.getCamPos());
+
+		particleGen.update(delta);
 		
 		/* DRAW RENDERABLES FROM ACTIVE SCENE */
 		Renderer::renderTexModel(shader, M_FLOOR, floor_trans);
-		//Renderer::renderTexModel(shader, M_CUBE, cube_trans);
 		Renderer::renderModel(lit_shader, M_CUBE, cube_trans);
-		Renderer::renderModel(light_shader, M_LIGHT, light_trans);
+		Renderer::renderModel(light_shader, M_LIGHT, light_trans); // render light source
 		Renderer::renderTexModel(shader, M_CUBE2, cube2_trans);
-		
+		Renderer::renderParticle(particle_shader, particleGen);
 		Renderer::renderSkybox(skybox_shader, sky); // render skybox last
 		
 		

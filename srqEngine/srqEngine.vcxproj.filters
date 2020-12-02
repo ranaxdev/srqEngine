@@ -63,7 +63,7 @@
     <ClCompile Include="src\Collision\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer_API\ParticleEmitter.cpp">
+    <ClCompile Include="src\Renderer_API\ParticleGen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,6 +116,9 @@
     <ClInclude Include="src\Renderer_API\ParticleEmitter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer_API\ParticleGen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\vertexgen.shader" />
@@ -126,6 +129,8 @@
     <None Include="res\shaders\lit\lit_frag.shader" />
     <None Include="res\shaders\light\light_vert.shader" />
     <None Include="res\shaders\light\light_frag.shader" />
+    <None Include="res\shaders\particle\particle_vert.shader" />
+    <None Include="res\shaders\particle\particle_frag.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\logo.png">

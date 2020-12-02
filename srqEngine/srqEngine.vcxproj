@@ -151,8 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer_API\ParticleGen.cpp" />
     <ClCompile Include="src\Collision\Collision.cpp" />
-    <ClCompile Include="src\Renderer_API\ParticleEmitter.cpp" />
     <ClCompile Include="src\Renderer_API\Skybox.cpp" />
     <ClCompile Include="src\Renderer_API\Buffer.cpp" />
     <ClCompile Include="depend\glad.c" />
@@ -170,6 +170,7 @@
     <ClCompile Include="src\Renderer_API\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer_API\ParticleGen.h" />
     <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\Renderer_API\ParticleEmitter.h" />
     <ClInclude Include="src\Renderer_API\Skybox.h" />
@@ -193,6 +194,8 @@
     <None Include="res\shaders\light\light_vert.shader" />
     <None Include="res\shaders\lit\lit_frag.shader" />
     <None Include="res\shaders\lit\lit_vert.shader" />
+    <None Include="res\shaders\particle\particle_frag.shader" />
+    <None Include="res\shaders\particle\particle_vert.shader" />
     <None Include="res\shaders\skybox\sky_frag.shader" />
     <None Include="res\shaders\skybox\sky_vert.shader" />
     <None Include="res\shaders\vertexgen.shader" />

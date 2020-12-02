@@ -44,6 +44,17 @@ void Renderer::renderTexModel(Shader& shader, Model& model, glm::mat4 transform)
 	
 }
 
+void Renderer::renderParticle(Shader& shader, ParticleGen& pg, glm::mat4 transform) {
+	shader.bind();
+	shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
+	shader.setMat4("u_M", transform);
+	shader.setFloat("size", 0.1f);
+
+	pg.render();
+
+}
+
+
 /* Render colored model to screen */
 void Renderer::renderModel(Shader& shader, Model& model, glm::mat4 transform) {
 	shader.bind();

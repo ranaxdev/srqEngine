@@ -7,6 +7,7 @@
 #include "Renderer_API/Shader.h"
 #include "Renderer_API/Model.h"
 #include "Renderer_API/Skybox.h"
+#include "Renderer_API/ParticleGen.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -21,7 +22,7 @@ public:
 	static void renderModel(Shader& shader, Model& model, glm::mat4 transform = glm::mat4(1.0f));
 	static void renderPlain(Shader& shader, VertexArray& va, glm::mat4 transform = glm::mat4(1.0f));
 	static void renderSkybox(Shader& shader, Skybox& sky);
-
+	static void renderParticle(Shader& shader, ParticleGen& pg, glm::mat4 transform = glm::mat4(1.0f));
 
 	static void init(Camera& cam);
 private:
