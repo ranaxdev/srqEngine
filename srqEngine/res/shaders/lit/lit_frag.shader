@@ -9,10 +9,10 @@ uniform vec3 obj_color;
 uniform vec3 light_color;
 uniform vec3 light_pos;
 uniform vec3 view_pos;
-
+uniform float intensity;
 void main() {
 	// ambience lighting
-	float intensity = 0.1f;
+	
 	vec3 ambience = intensity * light_color;
 
 	// diffuse lighting

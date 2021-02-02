@@ -1,12 +1,13 @@
 #include "ParticleGen.h"
 
 ParticleGen::ParticleGen() {
+	ParticleGen::pos = glm::vec3(0.0f);
 	ParticleGen::particles.resize(100);
 
 	// Generate random position and lifetime for particles
 	for (int i = 0; i < particles.size(); i++) {
-		particles[i].pos = glm::vec3(randFloat(-1.0f, 1.0f));
-		particles[i].life = randFloat(1.0f, 2.0f);
+		particles[i].pos = glm::vec3(randFloat(-20.0f, 20.0f), 0.0f, randFloat(-20.0f, 20.0f));
+		particles[i].life = randFloat(5.0f, 10.0f);
 	}
 
 	glGenBuffers(1, &(ParticleGen::vBuffer));
@@ -47,8 +48,8 @@ void ParticleGen::update(float delta) {
 
 		// Respawn if dead
 		if (particles[i].life <= 0.0f) {
-			particles[i].pos = glm::vec3(randFloat(-1.0f, 1.0f));
-			particles[i].life = randFloat(1.0f, 2.0f);
+			particles[i].pos = glm::vec3(randFloat(-20.0f, 20.0f), 0.0f, randFloat(-20.0f, 20.0f));
+			particles[i].life = randFloat(5.0f, 10.0f);
 		}
 
 		// Particles fall
@@ -82,6 +83,10 @@ void ParticleGen::render() {
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(4);
 
+}
+
+glm::vec3& ParticleGen::getPosition() {
+	return ParticleGen::pos;
 }
 
 float ParticleGen::randFloat(float a, float b) {

@@ -18,14 +18,15 @@ public:
 
 	void update(float deleta);
 	void render();
-
+	glm::vec3& getPosition();
 
 private:
 	std::vector<Particle> particles;
 	float positions[400];
 	unsigned int vBuffer;
 	unsigned int pBuffer;
-
+	glm::vec3 pos;
+	
 	float randFloat(float a, float b);
 };
 

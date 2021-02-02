@@ -9,15 +9,15 @@ out vec4 FragColor;
 uniform sampler2D thetex;
 uniform vec3 light_color;
 uniform vec3 light_pos;
-
+uniform float intensity;
 void main() {
 	// ambience lighting
-	float intensity = 0.1f;
+	
 	vec3 ambience = intensity * texture(thetex, tc).rgb;
 
 	// diffuse lighting
 	vec3 normal = normalize(Normal);
-	vec3 light_dir = normalize(light_pos - FragPos);
+	vec3 light_dir = normalize(light_pos - FragPos);	
 	float diffuse_factor = max(dot(normal, light_dir), 0.0f);
 	vec3 diffuse = diffuse_factor * light_color * texture(thetex, tc).rgb;
 
