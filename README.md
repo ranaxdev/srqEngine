@@ -133,7 +133,7 @@ s.bind();
 <hr/>
 
 ##### Textures
-Texture setup in OpenGL
+Textures in OpenGL require quite a bit of setup as well
 ```cpp
 // Initialize texture object
 unsigned int ID;
@@ -181,6 +181,21 @@ Model m2 = new Model("model.obj", ..., glm::vec3(1.0f))
 m1.bind();
 m2.bind();
 
+```
+
+<hr/>
+
+##### Skybox
+
+The skybox class is made from a cube model and requires 6 textures for each face of the cube in order to be rendered. When initializing a skybox object, you can pass the path to the directory that contains the face objects (make sure they are named right/left/top/bottom/front/back and in jpg format - both of these options can be changed within the class). It will use the stb image loader lirary to load in the textures, and bind them to the cube faces appropriately. In order to use the skybox, bind it once before the draw call.
+
+```cpp
+// Initialize skybox object 
+// Args : Path to the directory that contains the 6 face textures
+Skybox s = new Skybox("path-to-directory");
+// Bind before draw call to activate it, the depth and view matrix are set within the class itself so you dont have to modify anything
+s.bind();
+glDrawArrays(...);
 ```
 
 <hr/>
