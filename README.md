@@ -133,7 +133,7 @@ s.bind();
 <hr/>
 
 ##### Textures
-Textures in OpenGL require quite a bit of setup as well
+Texture setup in OpenGL
 ```cpp
 // Initialize texture object
 unsigned int ID;
