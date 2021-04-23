@@ -49,7 +49,7 @@ localBuffer = stbi_load(Texture::filepath, &(Texture::width), &(Texture::height)
 ```
 
 
-## Renderer API
+## Renderer API 
 
 ##### VBO/VAO
 
@@ -96,4 +96,108 @@ glDrawArrays(...);
 ```
 <hr/>
 
+##### Shaders
 
+In OpenGL steps to setup shaders include:
+```cpp
+// Defining shader src codes
+const char* vertex_shader_src = " ... "
+const char* fragment_shader_src = " ... "
+// Initializing shaders
+unsigned int vertex_shader, fragment_shader;
+glCreateShader(...); // (for both)
+// Compiling shaders
+glShaderSource(...);
+glCompileShader(...);
+// Creating a shader program and linking it (omitted)
+.
+.
+// Setting uniforms
+glUniform1i(...); // Manual data type entry i.e. 1i, 3f
+// Binding shader for use
+glUseProgram(...);
+```
+
+
+In the renderer API, the shader class handles all this shader creation, compilation, linking, setting uniforms and manual binding. You should create a directory with files that contain GLSL code (this would be the equivalant of passing the shader src in form of a string but that is handled by the shader class). All you need to do to intialize, compile and link it is to provide the file paths to the GLSL code on intialization. Predefined data types for uniforms can be set and binding method is provided.
+```cpp
+// Equivalant with Shader class
+// Setup shader
+Shader s = Shader("path-to-vertex-shader", "path-to-fragment-shader");
+// Set uniforms if you wish
+s.setMat4("uniform-name", glm::mat4(1.0f));
+// Bind it before drawing
+s.bind();
+```
+
+<hr/>
+
+##### Textures
+Textures in OpenGL require quite a bit of setup as well
+```cpp
+// Initialize texture object
+unsigned int ID;
+glGenTextures(1, &ID);
+// Set texture settings for interpolation, clamping etc.
+glTexParameteri(...);
+glTexParameteri(...);
+.
+.
+// Process texture with a buffer of image data
+int img_buffer[] = {...}
+// Provide details on textures such as width, height color mode, the actual buffer 
+glTexImage2D(GL_TEXTURE_2D ,..., img_buffer);
+glGenerateMipMaps(GL_TEXTURE_2D);
+// Bind texture and free buffer from memory
+// Currently bound & active texture used in fragment shader
+.
+.
+.
+```
+
+Simplified to a texture object that has predefined settings suitable for the models that are generated in srqEngine. No need to define an image buffer either, just provide a path to the texture with PNG format and you can bind it with a method call when you wish to use it
+```cpp
+// Entire texture setup
+Texture t = new Texture("path-to-texture.png");
+// Bind before drawing if you wish to use it
+// Make sure to bind appropriate fragment shader with it though
+t.bind()
+```
+
+<hr/>
+
+##### Models
+
+The model class initializes a model and fully prepares it for rendering. It contains a model importer which parses Wavefront object files, you can initialize a textured model or a plain one. It handles the VBO/VAO setup internally after parsing the Wavefront file into vectors. Simply bind it before the draw call if you wish to render the model.
+
+```cpp
+// Initialize textured model
+// ARGS: Path to wavefront object file, path to texture file, vec3 size in each axis, collidable, position
+Model m1 = new Model("model.obj", "texture.png", glm::vec3(1.0f), true, glm::vec3(0.0f));
+// Initialize plain model
+// Same arguments minus the texture path plus a color value in vec3 form for the fragment shader
+Model m2 = new Model("model.obj", ..., glm::vec3(1.0f))
+// To use a model simply bind it before the draw call
+m1.bind();
+m2.bind();
+
+```
+
+<hr/>
+
+
+## Camera
+
+Camera class has a function to recalcuate and return view-projection matrix, the calculations are handled internally. Camera position can be accessed and updated through methods as well. Use the view-projection matrix in shader uniforms to transform them to camera space and view them in perspective.
+```cpp
+// View matrix, uses camera coordinate space vectors to calculate it
+view = glm::lookAt(Camera::camPos, Camera::camPos + Camera::camFront, Camera::camUp);
+// Perspective projection matrix, defining FOV, far/near planes and their width/heights
+perspective = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
+// View-projection
+vp = perspective * view;
+
+// To use it simply initialize the camera and get the VP (recalculation is automatic on every return call)
+Camera cam = new Camera();
+glm::mat4 vp = cam.getVP();
+```
