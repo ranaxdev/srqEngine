@@ -200,6 +200,36 @@ glDrawArrays(...);
 
 <hr/>
 
+##### Lighting
+
+The engine provides shaders that simulate Phong-lighting for model objects. Define a plain model that you wish to use as a light source and place it in the scene. Use the lit-shader on the models, setting uniforms for the light source position and camera position (to get the specular highlights right). Here is how you would do it
+
+```cpp
+// First define and setup a lit model and a light source model
+Model affected = Model(...);
+Model light_source = Model(...);
+light_source.bind();
+affected.bind();
+
+// Get a generic shader for the light source & Phong-lighting shadre for the lit model
+Shader generic = Shader("path-to-generic-vertex-shader", "path-to-generic-fragment-shader");
+Shader lit = Shader("path-to-lit-vertex-shader", "path-to-lit-fragment-shader");
+
+// Bind lit-model shader and set uniforms
+lit.setVec3("obj_color", affect.getColor());
+lit.setVec3("light_color" ...); // And so on for light pos, view pos, intensity etc.
+
+// Finally bind the shaders and models together in pairs and draw them (renderer handles drawing)
+generic.bind();
+Renderer::render(light_source);
+
+lit.bind();
+Renderer::render(affected);
+
+
+```
+
+<hr/>
 
 ## Camera
 
