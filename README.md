@@ -231,6 +231,21 @@ Renderer::render(affected);
 
 <hr/>
 
+
+##### Collision Models
+Mark the collision flag to `true` on model initialization. It automatically generates the AABB and adds it to the collidable data structure to query for collisions. Ensure to update in the game loop.
+
+```cpp
+Model m = (..., true); // Last param is collidable flag
+// Game loop - Update collisions
+while(gameloop){
+    // Pass camera position (the point which is checked for intersection with AABBs)
+    Collision::updateCollisions(cam);
+}
+```
+
+<hr/>
+
 ## Camera
 
 Camera class has a function to recalcuate and return view-projection matrix, the calculations are handled internally. Camera position can be accessed and updated through methods as well. Use the view-projection matrix in shader uniforms to transform them to camera space and view them in perspective.
