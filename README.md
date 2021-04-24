@@ -246,6 +246,23 @@ while(gameloop){
 
 <hr/>
 
+##### Particle Generator
+The particle generator will create rectangular particles with random position values in the x/z plane and a large y-value (to simulate falling particles).
+
+```cpp
+// Create particle generator intance
+ParticleGen p = new ParticleGen();
+// Create and bind shader for particles
+Shader s = new Shader("path-to-particle-vertex-shader", "path-to-particle-fragment-shader");
+s.bind();
+// Update particles in game loop
+p.update(delta);
+// Send particles to renderer to draw
+Renderer::renderParticle(...);
+```
+
+<hr/>
+
 ## Camera
 
 Camera class has a function to recalcuate and return view-projection matrix, the calculations are handled internally. Camera position can be accessed and updated through methods as well. Use the view-projection matrix in shader uniforms to transform them to camera space and view them in perspective.
