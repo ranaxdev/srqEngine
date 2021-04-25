@@ -158,7 +158,7 @@ glGenerateMipMaps(GL_TEXTURE_2D);
 Simplified to a texture object that has predefined settings suitable for the models that are generated in srqEngine. No need to define an image buffer either, just provide a path to the texture with PNG format and you can bind it with a method call when you wish to use it
 ```cpp
 // Entire texture setup
-Texture t = new Texture("path-to-texture.png");
+Texture t = Texture("path-to-texture.png");
 // Bind before drawing if you wish to use it
 // Make sure to bind appropriate fragment shader with it though
 t.bind()
@@ -173,10 +173,10 @@ The model class initializes a model and fully prepares it for rendering. It cont
 ```cpp
 // Initialize textured model
 // ARGS: Path to wavefront object file, path to texture file, vec3 size in each axis, collidable, position
-Model m1 = new Model("model.obj", "texture.png", glm::vec3(1.0f), true, glm::vec3(0.0f));
+Model m1 = Model("model.obj", "texture.png", glm::vec3(1.0f), true, glm::vec3(0.0f));
 // Initialize plain model
 // Same arguments minus the texture path plus a color value in vec3 form for the fragment shader
-Model m2 = new Model("model.obj", ..., glm::vec3(1.0f))
+Model m2 = Model("model.obj", ..., glm::vec3(1.0f))
 // To use a model simply bind it before the draw call
 m1.bind();
 m2.bind();
@@ -192,7 +192,7 @@ The skybox class is made from a cube model and requires 6 textures for each face
 ```cpp
 // Initialize skybox object 
 // Args : Path to the directory that contains the 6 face textures
-Skybox s = new Skybox("path-to-directory");
+Skybox s = Skybox("path-to-directory");
 // Bind before draw call to activate it, the depth and view matrix are set within the class itself so you dont have to modify anything
 s.bind();
 glDrawArrays(...);
@@ -251,9 +251,9 @@ The particle generator will create rectangular particles with random position va
 
 ```cpp
 // Create particle generator intance
-ParticleGen p = new ParticleGen();
+ParticleGen p = ParticleGen();
 // Create and bind shader for particles
-Shader s = new Shader("path-to-particle-vertex-shader", "path-to-particle-fragment-shader");
+Shader s = Shader("path-to-particle-vertex-shader", "path-to-particle-fragment-shader");
 s.bind();
 // Update particles in game loop
 p.update(delta);
@@ -275,6 +275,6 @@ perspective = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float
 vp = perspective * view;
 
 // To use it simply initialize the camera and get the VP (recalculation is automatic on every return call)
-Camera cam = new Camera();
+Camera cam = Camera();
 glm::mat4 vp = cam.getVP();
 ```
