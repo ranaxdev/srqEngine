@@ -293,3 +293,27 @@ vp = perspective * view;
 Camera cam = Camera();
 glm::mat4 vp = cam.getVP();
 ```
+
+<hr/>
+
+## Renderer
+
+OpenGL uses draw function calls such as `glDrawArrays()` with certain flags/parameters such as `GL_TRIANGLES` or `GL_LINES`. In order for these to work as desired, a vertex/fragment shader must be bound, a VAO containing appropriate data must be bound and any potential textures as well. The renderer class provides functions to handle all of this and compile it nicely into single method calls
+
+```cpp
+// Render a plain model
+// shader has coupled vertex/fragment shaders. Model contains the VAOs, transform is the model matrix you can define
+void Renderer::renderModel(Shader& shader, Model& model, glm::mat4 transform){
+    shader.bind();
+    // Set uniforms : updated view-projection matrix is recieved from the camera class
+    shader.setMat4("u_VP", Renderer::viewProjectionMatrix);
+	shader.setMat4("u_M", transform);
+
+    // Bind the VAO
+    model.getVA().bind();
+
+    // Issue draw call
+    glDrawArrays(...);
+
+}
+```
