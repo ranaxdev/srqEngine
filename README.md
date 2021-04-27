@@ -263,6 +263,21 @@ Renderer::renderParticle(...);
 
 <hr/>
 
+##### Raycast
+The renderer can be used to cast a ray by utilizing the line shaders.
+```cpp
+// Initialize and bind line shaders
+Shader s = Shader("path-to-line-vertex-shader", "path-to-line-fragment-shader");
+// Call the draw line function in the renderer within the game loop to keep updating the positions
+// Arguments include start and end points of the ray, the line shader, the stroke value (width of line) and any transformations
+glm::vec3 pos1 = ...
+glm::vec3 pos2 = ...
+Renderer::drawLine(s, pos1, pos2, stroke...);
+
+```
+
+<hr/>
+
 ## Camera
 
 Camera class has a function to recalcuate and return view-projection matrix, the calculations are handled internally. Camera position can be accessed and updated through methods as well. Use the view-projection matrix in shader uniforms to transform them to camera space and view them in perspective.
