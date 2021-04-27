@@ -317,3 +317,20 @@ void Renderer::renderModel(Shader& shader, Model& model, glm::mat4 transform){
 
 }
 ```
+
+<hr/>
+
+## ECS
+The entity component system can be used in order to organize a scene configuration with models and their custom transformations attached to a single object which can be bound (set to active) in order to draw it all in one go. Entities can be attached to the scene which can have programmable components. The engine provides a basic implementation of this which can be further upgraded by the developer using the engine
+
+```cpp
+// initialize an empty scene
+Scene scene = Scene();
+// Create an entity and attach it to the scene
+Entity pyramid = Entity(&scene);
+// Add custom components to the entity
+// Components can be defined in ComponentType enum and added as arguments with this template method 
+pyramid.addComponent(ComponentType::RENDERABLE, ...); 
+// Set the scene to active
+Scene::setActive(&scene);
+```
