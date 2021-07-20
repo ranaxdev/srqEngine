@@ -7,7 +7,7 @@
   <h3 align="center">srqEngine</h3>
 
   <p align="center">
-    A DOOM-style 3D Graphics rendering framework made with modern OpenGL and C++, <br/>developed at the University of Essex (UK🇬🇧)
+    A DOOM-style 3D graphics rendering framework made with modern OpenGL and C++ <br/>Developed at the University of Essex (UK🇬🇧)
     <br />
     <br />
     <a href="https://youtube.com/playlist?list=PLhiYhW5wXPMEfmwrxB_91l0fGDL6p2zMV">Video Demos</a>
