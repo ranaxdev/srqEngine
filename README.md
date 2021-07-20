@@ -1,6 +1,22 @@
-# srqEngine
-A DOOM-style 3D Graphics rendering engine created with modern OpenGL and C++
+<br />
+<p align="center">
+  <a href="https://github.com/ranaxdev/srqEngine">
+    <img src="https://github.com/ranaxdev/srqEngine/blob/master/srqEngine/res/uoeinsignia.png" alt="Logo" width=128>
+  </a>
 
+  <h3 align="center">srqEngine</h3>
+
+  <p align="center">
+    A DOOM-style 3D Graphics rendering framework made with modern OpenGL and C++, <br/>developed at the University of Essex (UK🇬🇧)
+    <br />
+    <br />
+    <a href="https://youtube.com/playlist?list=PLhiYhW5wXPMEfmwrxB_91l0fGDL6p2zMV">Video Demos</a>
+    ·
+    <a href="https://github.com/ranaxdev/srqEngine/blob/master/srqEngine/res/Sharjeel_Qaiser_Dissertation.pdf">Full Paper </a>
+  </p>
+</p>
+
+## Some Renders
 ![demo1](https://github.com/ranaxdev/srqEngine/blob/master/srqEngine/res/demo2.png)
 ![demo2](https://github.com/ranaxdev/srqEngine/blob/master/srqEngine/res/demo3.png)
 ![demo3](https://github.com/ranaxdev/srqEngine/blob/master/srqEngine/res/demo4.png)
